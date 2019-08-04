@@ -18,14 +18,11 @@ class MediaPersonLoan
     private $media;
 
     /**
-     * @var \App\Entity\MediaStatusLoan
-     */
-    private $status;
-
-    /**
      * @var \App\Entity\Person
      */
     private $person;
+
+    private $returnedAt;
 
 
     /**
@@ -63,30 +60,6 @@ class MediaPersonLoan
     }
 
     /**
-     * Set status.
-     *
-     * @param \App\Entity\MediaStatusLoan|null $status
-     *
-     * @return MediaPersonLoan
-     */
-    public function setStatus(\App\Entity\MediaStatusLoan $status = null)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status.
-     *
-     * @return \App\Entity\MediaStatusLoan|null
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
      * Set person.
      *
      * @param \App\Entity\Person|null $person
@@ -108,5 +81,29 @@ class MediaPersonLoan
     public function getPerson()
     {
         return $this->person;
+    }
+
+    /**
+     * Set returnedAt.
+     *
+     * @param \DateTime $returnedAt
+     *
+     * @return MediaPersonLoan
+     */
+    public function setReturnedAt($returnedAt)
+    {
+        $this->returnedAt = $returnedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get returnedAt.
+     *
+     * @return \DateTime
+     */
+    public function getReturnedAt()
+    {
+        return $this->returnedAt;
     }
 }
