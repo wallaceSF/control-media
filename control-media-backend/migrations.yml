@@ -1,0 +1,4 @@
+name: My Application Migrations
+migrations_namespace: App\DoctrineMigrations
+table_name: doctrine_migration_versions
+migrations_directory: src/App/DoctrineMigrations
