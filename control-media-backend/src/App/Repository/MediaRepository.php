@@ -2,22 +2,58 @@
 
 namespace App\Repository;
 
-class MediaRepository extends \Doctrine\ORM\EntityRepository
+use App\Entity\Media;
+use App\ValueObject\MediaPaginatorVO;
+use App\ValueObject\MediaVO;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
+class MediaRepository extends EntityRepository
 {
-    public function findMediaBy(array $params = [], int $firstResult = 0, int $maxResults = 10, $order = 'asc'){
-        $dql = "SELECT m FROM Media m ORDER BY m.id ASC";
-        $query = $this->getEntityManager()->createQuery($dql)
+    /**
+     * @param int $firstResult
+     * @param int $maxResults
+     * @param string $columnOrder
+     * @param string $order
+     * @return MediaPaginatorVO
+     * @throws \Exception
+     */
+    public function findAllMediaWithPagination(int $firstResult = 0, int $maxResults = 10, $columnOrder = 'media-id', $order = 'asc'): MediaPaginatorVO {
+
+        $mediaPaginatorVO = new MediaPaginatorVO();
+        if(!isset($mediaPaginatorVO->columnOrder[$columnOrder])){
+            throw new \Exception('coluna não permitida', 400);
+        }
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $qb
+            ->select('media')
+            ->from('App\Entity\Media', 'media')
+            ->join('media.type', 'type')
+            ->orderBy($mediaPaginatorVO->columnOrder[$columnOrder], $order)
             ->setFirstResult($firstResult)
             ->setMaxResults($maxResults);
 
-        var_dump($query); die('repository');
+        /** @var Media[]|Paginator $paginatorMedia */
+        $paginatorMedia = new Paginator($qb, $fetchJoinCollection = true);
 
-     //   $paginator = new Paginator($query, $fetchJoinCollection = true);
+        $listMediaVO = [];
+        foreach ($paginatorMedia as $media) {
+            $mediaVO = new MediaVO();
+            $mediaVO->id = $media->getId();
+            $mediaVO->title = $media->getTitle();
+            $mediaVO->description = $media->getDescription();
+            $mediaVO->type = $media->getType();
 
-     //   $c = count($paginator);
-      //  foreach ($paginator as $post) {
-      //      echo $post->getHeadline() . "\n";
-        //}
+            $listMediaVO[] = $mediaVO;
+        }
+
+        $mediaPaginatorVO->mediaVO = $listMediaVO;
+        $mediaPaginatorVO->currentFirst = $firstResult;
+        $mediaPaginatorVO->currentMax = $maxResults;
+        $mediaPaginatorVO->total = $paginatorMedia->count();
+
+        return $mediaPaginatorVO;
     }
 
 }
