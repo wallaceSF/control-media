@@ -2,7 +2,6 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="App\Entity\MediaPersonLoan" table="media_person_loan">
     <indexes>
-      <index name="media_person_loan_media_status_loan_id_fk" columns="status"/>
       <index name="media_person_loan_media_id_fk" columns="media"/>
       <index name="media_person_loan_person_id_fk" columns="person"/>
     </indexes>
@@ -19,6 +18,6 @@
         <join-column name="person" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
-    <field name="returnedAt" type="date" column="returned_at" nullable="false"/>
+    <field name="returnedAt" type="date" column="returned_at" nullable="true"/>
   </entity>
 </doctrine-mapping>
