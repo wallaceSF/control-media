@@ -11,6 +11,7 @@ namespace App\Service;
 use App\Entity\Media;
 use App\Entity\MediaType;
 use App\Repository\MediaRepository;
+use App\ValueObject\MediaPaginatorVO;
 use App\ValueObject\MediaVO;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\OptimisticLockException;
@@ -67,7 +68,7 @@ class MediaService
      * @throws OptimisticLockException
      * @throws Exception
      */
-    public function updateMedia(MediaVO $mediaVO)
+    public function updateMedia(MediaVO $mediaVO): Media
     {
         /** @var Media $mediaObject */
         $mediaObject = $this->entityManager->getRepository(Media::class)->find($mediaVO->id);
@@ -92,14 +93,26 @@ class MediaService
         return $mediaObject;
     }
 
-    public function deleteMedia(int $id)
+    /**
+     * @param int $id
+     * @return Media
+     * @throws ORMException
+     * @throws OptimisticLockException
+     * @throws Exception
+     */
+    public function deleteMedia(int $id): Media
     {
+        /** @var Media $mediaObject */
         $mediaObject = $this->entityManager->getRepository(Media::class)->find($id);
+
+        if(empty($mediaObject)) {
+            throw new Exception('media não encontrada', 400);
+        }
 
         $this->entityManager->remove($mediaObject);
         $this->entityManager->flush();
 
-        var_dump($mediaObject);; die('tirar depois');
+        return $mediaObject;
     }
 
     /**
@@ -117,13 +130,18 @@ class MediaService
         return $mediaObject;
     }
 
-    public function findBy(array $params = [], int $firstResult = 0, int $maxResults = 10, $order = self::ASC)
+    /**
+     * @param int $firstResult
+     * @param int $maxResults
+     * @param string $columnOrder
+     * @param string $order
+     * @return MediaPaginatorVO
+     * @throws Exception
+     */
+    public function findBy(int $firstResult = 0, int $maxResults = 10, string $columnOrder = 'id', $order = self::ASC)
     {
-
         /** @var MediaRepository $mediaObject */
         $mediaObject = $this->entityManager->getRepository(Media::class);
-
-        return $mediaObject->findMediaBy($params, $firstResult, $maxResults, $order);
-
+        return $mediaObject->findAllMediaWithPagination($firstResult, $maxResults, $columnOrder, $order);
     }
 }
