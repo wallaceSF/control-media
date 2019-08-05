@@ -13,7 +13,7 @@ use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class CreateMediaHandler extends BaseController
+class UpdateMediaHandler extends BaseController
 {
     /**
      * @var MediaService
@@ -42,7 +42,7 @@ class CreateMediaHandler extends BaseController
     {
         /** @var MediaVO $mediaVO */
         $mediaVO = (new JsonMapper())->map(json_decode($request->getBody()->getContents()), new MediaVO());
-        $this->mediaService->createMedia($mediaVO);
+        $this->mediaService->updateMedia($mediaVO);
         return $response->withJSON([],201,JSON_PRETTY_PRINT);
     }
 }

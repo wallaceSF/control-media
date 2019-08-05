@@ -3,17 +3,15 @@
 namespace App\Handler\Media;
 
 use App\BaseProject\BaseController;
+use App\Entity\Media;
 use App\Service\MediaService;
-use App\ValueObject\MediaVO;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
-use JsonMapper;
-use JsonMapper_Exception;
+
+use JMS\Serializer\SerializerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class CreateMediaHandler extends BaseController
+class FindAllMediaHandler extends BaseController
 {
     /**
      * @var MediaService
@@ -34,15 +32,15 @@ class CreateMediaHandler extends BaseController
      * @param Response $response
      * @param array $args
      * @return ResponseInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
-     * @throws JsonMapper_Exception
      */
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {
-        /** @var MediaVO $mediaVO */
-        $mediaVO = (new JsonMapper())->map(json_decode($request->getBody()->getContents()), new MediaVO());
-        $this->mediaService->createMedia($mediaVO);
-        return $response->withJSON([],201,JSON_PRETTY_PRINT);
+        /** @var Media[] $listMedia */
+        $listMedia = $this->mediaService->findAllMedia();
+
+        $serializer = SerializerBuilder::create()->build();
+        $listMediaArray = json_decode($serializer->serialize($listMedia, 'json'),true);
+
+        return $response->withJSON($listMediaArray, 200, JSON_PRETTY_PRINT);
     }
 }
