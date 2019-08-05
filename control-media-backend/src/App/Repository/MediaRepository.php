@@ -18,12 +18,18 @@ class MediaRepository extends EntityRepository
      * @return MediaPaginatorVO
      * @throws \Exception
      */
-    public function findAllMediaWithPagination(int $firstResult = 0, int $maxResults = 10, $columnOrder = 'media-id', $order = 'asc'): MediaPaginatorVO {
+    public function findAllMediaWithPagination(int $firstResult = 1, int $maxResults = 10, $columnOrder = 'media-id', $order = 'asc'): MediaPaginatorVO {
 
         $mediaPaginatorVO = new MediaPaginatorVO();
         if(!isset($mediaPaginatorVO->columnOrder[$columnOrder])){
             throw new \Exception('coluna não permitida', 400);
         }
+
+        if($firstResult == 0) {
+            $firstResult = 1;
+        }
+
+        $offset = $maxResults * ($firstResult - 1);
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb = $qb
@@ -31,7 +37,7 @@ class MediaRepository extends EntityRepository
             ->from('App\Entity\Media', 'media')
             ->join('media.type', 'type')
             ->orderBy($mediaPaginatorVO->columnOrder[$columnOrder], $order)
-            ->setFirstResult($firstResult)
+            ->setFirstResult($offset)
             ->setMaxResults($maxResults);
 
         /** @var Media[]|Paginator $paginatorMedia */
