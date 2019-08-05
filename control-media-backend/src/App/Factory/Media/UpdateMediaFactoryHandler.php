@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Factory;
+namespace App\Factory\Media;
 
-use App\Handler\CreateMediaHandler;
+use App\Handler\Media\UpdateMediaHandler;
 use App\Service\MediaService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
-class CreateMediaFactoryHandler
+class UpdateMediaFactoryHandler
 {
     /**
      * @param Container $container
-     * @return CreateMediaHandler
+     * @return UpdateMediaHandler
      * @throws ContainerException
      */
-    public function __invoke(Container $container): CreateMediaHandler
+    public function __invoke(Container $container): UpdateMediaHandler
     {
         /** @var MediaService $mediaService */
         $mediaService = $container->get(MediaFactoryService::class);
-        return new CreateMediaHandler($mediaService);
+        return new UpdateMediaHandler($mediaService);
     }
 }
