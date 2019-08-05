@@ -8,5 +8,4 @@ class MediaVO
     public $title;
     public $description;
     public $type;
-    public $person;
 }
