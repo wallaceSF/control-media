@@ -63,6 +63,6 @@ class MediaApplicationService implements MediaApplicationServiceInterface
      * @throws \Exception
      */
     public function findBy($firstResult, $maxResult, $columnOrder, $order){
-        return $this->media->updateMedia($firstResult,$maxResult,$columnOrder,$order);
+        return $this->media->findBy($firstResult,$maxResult,$columnOrder,$order);
     }
 }
