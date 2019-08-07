@@ -4,8 +4,6 @@ namespace App\Presentation\Handler\Media;
 
 use App\Application\Service\MediaApplicationService;
 use App\BaseProject\BaseController;
-use App\Domain\Service\MediaService;
-
 use JMS\Serializer\SerializerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
@@ -32,6 +30,10 @@ class FindMediaHandler extends BaseController
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {
         $mediaObject = $this->mediaService->findMedia($args['id']);
+
+        if(is_null($mediaObject)){
+            $mediaObject = [];
+        }
 
         $serializer = SerializerBuilder::create()->build();
         $mediaArray = json_decode($serializer->serialize($mediaObject, 'json'),true);
