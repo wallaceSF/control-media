@@ -1,6 +1,7 @@
 <?php
 
 use App\Application\Service\MediaApplicationService;
+use App\Domain\Contract\Application\ConnectionApplicationInterface;
 use App\Domain\Contract\Application\MediaApplicationServiceInterface;
 use App\Domain\Contract\Application\PersonApplicationServiceInterface;
 use App\Domain\Contract\Domain\DataBaseBuildInterface;
@@ -29,6 +30,7 @@ use App\Presentation\Factory\Person\UpdatePersonFactoryHandler;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Slim\App;
+use Slim\Container;
 
 /**
  * @param App $app
@@ -71,7 +73,9 @@ return function (App $app) {
     //Application
     $container[MediaApplicationServiceInterface::class] = new MediaApplicationFactoryService();
     $container[PersonApplicationServiceInterface::class] = new PersonApplicationFactoryService();
-
+    $container[ConnectionApplicationInterface::class] = function (Container $container) {
+        return new \App\Domain\Service\ConnectionApplication($container->get('connection'));
+    };
 
     //Service
     $container[MediaFactoryService::class] = new MediaFactoryService();
@@ -83,8 +87,7 @@ return function (App $app) {
 
     $container[PersonRepositoryInterface::class] = new PersonFactoryRepository();
 
-
-    $container[DataBaseBuildInterface::class] = function ($container) {
+    $container['connection'] = function (Container $container) {
         $config = Setup::createXMLMetadataConfiguration(
             [__DIR__ . '/../src/Infrastructure/Mapping'],
             true,
@@ -92,9 +95,14 @@ return function (App $app) {
             null
         );
 
-        $entityManager = EntityManager::create($container['settings']['doctrine']['connection'], $config);
-        $r = new DataBaseBuild($entityManager);
-        return $r;
+        return EntityManager::create($container['settings']['doctrine']['connection'], $config);
     };
+
+    $container[DataBaseBuildInterface::class] = function (Container $container) {
+        $connection = $container->get('connection');
+        return new DataBaseBuild($connection);
+    };
+
+
 
 };

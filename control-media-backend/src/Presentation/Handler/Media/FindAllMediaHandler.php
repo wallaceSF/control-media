@@ -6,8 +6,6 @@ use App\Application\Service\MediaApplicationService;
 use App\BaseProject\BaseController;
 use App\Domain\Entity\Media;
 use App\Domain\Service\MediaService;
-
-use App\Presentation\Factory\Media\MediaApplicationFactoryService;
 use JMS\Serializer\SerializerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
@@ -21,8 +19,8 @@ class FindAllMediaHandler extends BaseController
     private $mediaService;
 
     /**
-     * MediaController constructor.
-     * @param MediaService $mediaService
+     * FindAllMediaHandler constructor.
+     * @param MediaApplicationService $mediaService
      */
     public function __construct(MediaApplicationService $mediaService)
     {
