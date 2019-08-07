@@ -2,6 +2,9 @@
 
 namespace Tests\Functional;
 
+use App\Domain\Service\DatabaseBuild;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -62,7 +65,10 @@ class BaseTestCase extends TestCase
 
         // Set up dependencies
         $dependencies = require __DIR__ . '/../../config/dependencies.php';
+
         $dependencies($app);
+
+       // var_dump($app->getContainer(EntityManager::class));
 
         // Register middleware
         if ($this->withMiddleware) {
@@ -79,5 +85,26 @@ class BaseTestCase extends TestCase
 
         // Return the response
         return $response;
+    }
+
+    public function createEntityManager(){
+        $container = require __DIR__.'/../../config/settings.php';
+
+        $config = Setup::createXMLMetadataConfiguration(
+            [__DIR__ . '/../../src/Infrastructure/Mapping'],
+            true,
+            null,
+            null
+        );
+
+        try {
+            $entityManager = EntityManager::create($container['settings']['doctrine']['connection'], $config);
+        } catch (\Doctrine\ORM\ORMException $e) {
+            var_dump($e);
+            exit;
+        }
+
+        $r = new DataBaseBuild($entityManager);
+        return $r;
     }
 }

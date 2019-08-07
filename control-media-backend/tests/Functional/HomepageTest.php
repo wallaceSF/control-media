@@ -2,41 +2,85 @@
 
 namespace Tests\Functional;
 
+use App\Domain\Service\MediaService;
+use App\Domain\ValueObject\MediaVO;
+
 class HomepageTest extends BaseTestCase
 {
-    /**
-     * Test that the index route returns a rendered response containing the text 'SlimFramework' but not a greeting
-     */
-    public function testGetHomepageWithoutName()
+    public function testCreatedMedia()
     {
-        $response = $this->runApp('GET', '/');
+        $entityManager = $this->createEntityManager();
+        $mediaService = new MediaService($entityManager);
 
-        $body = (string)$response->getBody();
+        $mediaVO = new MediaVO();
+        $mediaVO->title = 'my book';
+        $mediaVO->description = 'my description';
+        $mediaVO->type = 3;
+        $mediaObject = $mediaService->createMedia($mediaVO);
 
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertStringContainsString('SlimFramework', $body, "SlimFramework doesn't contains {$body} as substring");
-        $this->assertStringNotContainsStringIgnoringCase('Hello', (string)$response->getBody());
+        $this->assertEquals($mediaVO->title, $mediaObject->getTitle());
     }
 
-    /**
-     * Test that the index route with optional name argument returns a rendered greeting
-     */
-    public function testGetHomepageWithGreeting()
+    public function testUpdateMedia()
     {
-        $response = $this->runApp('GET', '/name');
+        $entityManager = $this->createEntityManager();
+        $mediaService = new MediaService($entityManager);
 
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertStringContainsString('Hello name!', (string)$response->getBody());
+        $mediaVOInsert = new MediaVO();
+        $mediaVOInsert->title = 'my insert title';
+        $mediaVOInsert->description = 'my description';
+        $mediaVOInsert->type = 3;
+        $mediaObjectInsert = $mediaService->createMedia($mediaVOInsert);
+
+        $mediaVO = new MediaVO();
+        $mediaVO->title = 'my title test update';
+        $mediaVO->description = 'my description';
+        $mediaVO->type = 2;
+        $mediaVO->id = $mediaObjectInsert->getId();
+        $mediaObject = $mediaService->updateMedia($mediaVO);
+
+        $this->assertEquals($mediaVO->title, $mediaObject->getTitle());
     }
 
-    /**
-     * Test that the index route won't accept a post request
-     */
-    public function testPostHomepageNotAllowed()
-    {
-        $response = $this->runApp('POST', '/', ['test']);
 
-        $this->assertEquals(405, $response->getStatusCode());
-        $this->assertStringContainsString('Method not allowed', (string)$response->getBody());
+    public function testDeleteMedia()
+    {
+        $entityManager = $this->createEntityManager();
+        $mediaService = new MediaService($entityManager);
+
+        $mediaVOInsert = new MediaVO();
+        $mediaVOInsert->title = 'my insert will delete';
+        $mediaVOInsert->description = 'my description';
+        $mediaVOInsert->type = 3;
+        $mediaObjectInsert = $mediaService->createMedia($mediaVOInsert);
+
+        $mediaObject = $mediaService->deleteMedia($mediaObjectInsert->getId());
+
+        $this->assertEquals($mediaVOInsert->title, $mediaObject->getTitle());
+    }
+
+    public function testFindAllMedia()
+    {
+        $entityManager = $this->createEntityManager();
+        $mediaService = new MediaService($entityManager);
+        $mediaArrayObject = $mediaService->findAllMedia();
+
+        $this->assertIsArray($mediaArrayObject, 'Is array object');
+    }
+
+    public function testFindMedia()
+    {
+        $entityManager = $this->createEntityManager();
+        $mediaService = new MediaService($entityManager);
+
+        $mediaVOInsert = new MediaVO();
+        $mediaVOInsert->title = 'my insert will delete';
+        $mediaVOInsert->description = 'my description';
+        $mediaVOInsert->type = 1;
+        $mediaObjectInsert = $mediaService->createMedia($mediaVOInsert);
+
+        $mediaObject = $mediaService->findMedia($mediaObjectInsert->getId());
+
+        $this->assertIsObject($mediaObject, 'Is object');
     }
 }
