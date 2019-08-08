@@ -3,17 +3,24 @@
 use App\Application\Service\MediaApplicationService;
 use App\Domain\Contract\Application\ConnectionApplicationInterface;
 use App\Domain\Contract\Application\MediaApplicationServiceInterface;
+use App\Domain\Contract\Application\MediaPersonLoanApplicationServiceInterface;
 use App\Domain\Contract\Application\PersonApplicationServiceInterface;
 use App\Domain\Contract\Domain\DataBaseBuildInterface;
+use App\Domain\Contract\Infrastruture\Repository\MediaPersonLoanRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaTypeRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\PersonRepositoryInterface;
 use App\Domain\Service\DatabaseBuild;
+use App\Infrastructure\Repository\MediaPersonLoanRepository;
 use App\Presentation\Factory\Media\CreateMediaFactoryHandler;
 use App\Presentation\Factory\Media\FindByMediaFactoryHandler;
 use App\Presentation\Factory\Media\MediaApplicationFactoryService;
 use App\Presentation\Factory\Media\MediaFactoryRepository;
 use App\Presentation\Factory\Media\MediaTypeFactoryRepository;
+use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanApplicationFactoryService;
+use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanFactoryRepository;
+use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanFactoryService;
+use App\Presentation\Factory\Person\FindPersonFactoryHandler;
 use App\Presentation\Factory\Person\PersonApplicationFactoryService;
 use App\Presentation\Factory\MediaPersonLoan\ReturnDataPersonPickedUpBookFactoryHandler;
 use App\Presentation\Factory\Person\CreatePersonFactoryHandler;
@@ -64,6 +71,7 @@ return function (App $app) {
     $container[DeleteMediaFactoryHandler::class] = new DeleteMediaFactoryHandler();
 
     $container[FindAllPersonFactoryHandler::class] = new FindAllPersonFactoryHandler();
+    $container[FindPersonFactoryHandler::class] = new FindPersonFactoryHandler();
     $container[CreatePersonFactoryHandler::class] = new CreatePersonFactoryHandler();
     $container[UpdatePersonFactoryHandler::class] = new UpdatePersonFactoryHandler();
     $container[DeletePersonFactoryHandler::class] = new DeletePersonFactoryHandler();
@@ -73,6 +81,9 @@ return function (App $app) {
     //Application
     $container[MediaApplicationServiceInterface::class] = new MediaApplicationFactoryService();
     $container[PersonApplicationServiceInterface::class] = new PersonApplicationFactoryService();
+    $container[MediaPersonLoanApplicationServiceInterface::class] = new MediaPersonLoanApplicationFactoryService();
+
+
     $container[ConnectionApplicationInterface::class] = function (Container $container) {
         return new \App\Domain\Service\ConnectionApplication($container->get('connection'));
     };
@@ -80,10 +91,13 @@ return function (App $app) {
     //Service
     $container[MediaFactoryService::class] = new MediaFactoryService();
     $container[PersonFactoryService::class] = new PersonFactoryService();
+    $container[MediaPersonLoanFactoryService::class] = new MediaPersonLoanFactoryService();
+
 
     //Repository
     $container[MediaRepositoryInterface::class] = new MediaFactoryRepository();
     $container[MediaTypeRepositoryInterface::class] = new MediaTypeFactoryRepository();
+    $container[MediaPersonLoanRepositoryInterface::class] = new MediaPersonLoanFactoryRepository();
 
     $container[PersonRepositoryInterface::class] = new PersonFactoryRepository();
 
