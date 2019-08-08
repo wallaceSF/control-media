@@ -4,13 +4,43 @@ namespace Tests\Functional;
 
 use App\Domain\Service\MediaService;
 use App\Domain\ValueObject\MediaVO;
+use App\Infrastructure\Repository\MediaRepository;
+use App\Infrastructure\Repository\MediaTypeRepository;
 
 class HomepageTest extends BaseTestCase
 {
+    /**
+     * @var MediaRepository
+     */
+    public $mediaRepository;
+    /**
+     * @var MediaTypeRepository
+     */
+    public $mediaTypeRepository;
+
+    /**
+     * HomepageTest constructor.
+     */
+    public function setUp(): void
+    {
+        $connectionDataBase = $this->createEntityManager();
+        $this->mediaRepository = new MediaRepository($connectionDataBase);
+        $this->mediaTypeRepository = new MediaTypeRepository($connectionDataBase);
+    }
+
+    public function testOjectMediaRepository()
+    {
+        $this->assertInstanceOf(MediaRepository::class, $this->mediaRepository);
+    }
+
+    public function testOjectMediaTypeRepository()
+    {
+        $this->assertInstanceOf(MediaTypeRepository::class, $this->mediaTypeRepository);
+    }
+
     public function testCreatedMedia()
     {
-        $entityManager = $this->createEntityManager();
-        $mediaService = new MediaService($entityManager);
+        $mediaService = new MediaService($this->mediaRepository, $this->mediaTypeRepository);
 
         $mediaVO = new MediaVO();
         $mediaVO->title = 'my book';
@@ -23,8 +53,7 @@ class HomepageTest extends BaseTestCase
 
     public function testUpdateMedia()
     {
-        $entityManager = $this->createEntityManager();
-        $mediaService = new MediaService($entityManager);
+        $mediaService = new MediaService($this->mediaRepository, $this->mediaTypeRepository);
 
         $mediaVOInsert = new MediaVO();
         $mediaVOInsert->title = 'my insert title';
@@ -45,9 +74,7 @@ class HomepageTest extends BaseTestCase
 
     public function testDeleteMedia()
     {
-        $entityManager = $this->createEntityManager();
-        $mediaService = new MediaService($entityManager);
-
+        $mediaService = new MediaService($this->mediaRepository, $this->mediaTypeRepository);
         $mediaVOInsert = new MediaVO();
         $mediaVOInsert->title = 'my insert will delete';
         $mediaVOInsert->description = 'my description';
@@ -61,8 +88,7 @@ class HomepageTest extends BaseTestCase
 
     public function testFindAllMedia()
     {
-        $entityManager = $this->createEntityManager();
-        $mediaService = new MediaService($entityManager);
+        $mediaService = new MediaService($this->mediaRepository, $this->mediaTypeRepository);
         $mediaArrayObject = $mediaService->findAllMedia();
 
         $this->assertIsArray($mediaArrayObject, 'Is array object');
@@ -70,9 +96,7 @@ class HomepageTest extends BaseTestCase
 
     public function testFindMedia()
     {
-        $entityManager = $this->createEntityManager();
-        $mediaService = new MediaService($entityManager);
-
+        $mediaService = new MediaService($this->mediaRepository, $this->mediaTypeRepository);
         $mediaVOInsert = new MediaVO();
         $mediaVOInsert->title = 'my insert will delete';
         $mediaVOInsert->description = 'my description';
