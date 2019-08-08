@@ -1,6 +1,7 @@
 <?php
 
 use App\Presentation\Factory\Media\CreateMediaFactoryHandler;
+use App\Presentation\Factory\MediaPersonLoan\ReturnDataPersonPickedUpBookFactoryHandler;
 use App\Presentation\Factory\Person\CreatePersonFactoryHandler;
 use App\Presentation\Factory\Media\DeleteMediaFactoryHandler;
 use App\Presentation\Factory\Person\DeletePersonFactoryHandler;
@@ -38,4 +39,6 @@ return function (App $app) {
     $app->post("/person/create/", CreatePersonFactoryHandler::class);
     $app->put("/person/update/", UpdatePersonFactoryHandler::class);
     $app->delete("/person/{id}", DeletePersonFactoryHandler::class);
+
+    $app->get("/getDataPersonLoan/{mediaId}", ReturnDataPersonPickedUpBookFactoryHandler::class);
 };
