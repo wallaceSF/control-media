@@ -8,12 +8,12 @@
     <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <many-to-one field="media" target-entity="App\Entity\Media" fetch="EAGER">
+    <many-to-one field="media" target-entity="App\Domain\Entity\Media" fetch="EAGER">
       <join-columns>
         <join-column name="media" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
-    <many-to-one field="person" target-entity="App\Entity\Person" fetch="EAGER">
+    <many-to-one field="person" target-entity="App\Domain\Entity\Person" fetch="EAGER">
       <join-columns>
         <join-column name="person" referenced-column-name="id"/>
       </join-columns>
