@@ -8,9 +8,8 @@
 
 namespace App\Presentation\Factory\MediaPersonLoan;
 
-use App\Handler\Media\ReturnDataPersonPickedUpBookHandler;
-use App\Service\MediaPersonLoanService;
-use Doctrine\ORM\EntityManager;
+use App\Domain\Contract\Application\MediaPersonLoanApplicationServiceInterface;
+use App\Presentation\Handler\MediaPersonLoan\ReturnDataPersonPickedUpBookHandler;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
@@ -23,8 +22,7 @@ class ReturnDataPersonPickedUpBookFactoryHandler
      */
     public function __invoke(Container $container): ReturnDataPersonPickedUpBookHandler
     {
-        /** @var MediaPersonLoanService $mediaPersonLoanService */
-        $mediaPersonLoanService = $container->get(MediaPersonLoanFactoryService::class);
+        $mediaPersonLoanService = $container->get(MediaPersonLoanApplicationServiceInterface::class);
         return new ReturnDataPersonPickedUpBookHandler($mediaPersonLoanService);
     }
 }

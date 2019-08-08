@@ -8,7 +8,8 @@
 
 namespace App\Presentation\Factory\MediaPersonLoan;
 
-use App\Domain\Contract\Domain\DataBaseBuildInterface;
+use App\Domain\Contract\Infrastruture\Repository\MediaPersonLoanRepositoryInterface;
+use App\Domain\Contract\Infrastruture\Repository\MediaRepositoryInterface;
 use App\Domain\Service\MediaPersonLoanService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
@@ -22,8 +23,8 @@ class MediaPersonLoanFactoryService
      */
     public function __invoke(Container $container): MediaPersonLoanService
     {
-        /** @var DataBaseBuildInterface $entityManager */
-        $entityManager = $container->get(DataBaseBuildInterface::class);
-        return new MediaPersonLoanService($entityManager);
+        /** @var MediaRepositoryInterface $mediaRepository */
+        $mediaPersonLoanRepository = $container->get(MediaPersonLoanRepositoryInterface::class);
+        return new MediaPersonLoanService($mediaPersonLoanRepository);
     }
 }

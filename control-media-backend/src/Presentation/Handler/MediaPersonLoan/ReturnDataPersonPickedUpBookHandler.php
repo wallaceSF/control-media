@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Handler\Media;
+namespace App\Presentation\Handler\MediaPersonLoan;
 
+use App\Application\Service\MediaPersonLoanApplicationService;
 use App\BaseProject\BaseController;
 use App\Domain\Service\MediaPersonLoanService;
 use App\Domain\ValueObject\InfoLoanVO;
@@ -17,11 +18,7 @@ class ReturnDataPersonPickedUpBookHandler extends BaseController
      */
     private $mediaPersonLoanService;
 
-    /**
-     * MediaController constructor.
-     * @param MediaPersonLoanService $mediaPersonLoanService
-     */
-    public function __construct(MediaPersonLoanService $mediaPersonLoanService)
+    public function __construct(MediaPersonLoanApplicationService $mediaPersonLoanService)
     {
         $this->mediaPersonLoanService = $mediaPersonLoanService;
     }
@@ -36,6 +33,10 @@ class ReturnDataPersonPickedUpBookHandler extends BaseController
     {
         /** @var InfoLoanVO|null $listMedia */
         $infoLoanVO = $this->mediaPersonLoanService->returnDataPersonPickedUpBookHandler($args['mediaId']);
+
+        if(is_null($infoLoanVO)){
+            $infoLoanVO = [];
+        }
 
         $serializer = SerializerBuilder::create()->build();
         $infoLoanVOArray = json_decode($serializer->serialize($infoLoanVO, 'json'),true);

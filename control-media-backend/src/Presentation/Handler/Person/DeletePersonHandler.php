@@ -32,6 +32,7 @@ class DeletePersonHandler extends BaseController
      */
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {
+        die('Im develpment');
         $id = 2;
         $this->personService->deletePerson($id);
 

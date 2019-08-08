@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Handler\Person;
+namespace App\Presentation\Handler\Person;
 
+use App\Application\Service\PersonApplicationService;
 use App\BaseProject\BaseController;
-use App\Domain\Service\PersonService;
-
 use JMS\Serializer\SerializerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;
@@ -12,16 +11,14 @@ use Slim\Http\Response;
 
 class FindPersonHandler extends BaseController
 {
-    /**
-     * @var PersonService
-     */
+
     private $personService;
 
     /**
-     * PersonController constructor.
-     * @param PersonService $personService
+     * FindPersonHandler constructor.
+     * @param PersonApplicationService $personService
      */
-    public function __construct(PersonService $personService)
+    public function __construct(PersonApplicationService $personService)
     {
         $this->personService = $personService;
     }
@@ -35,6 +32,10 @@ class FindPersonHandler extends BaseController
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {
         $personObject = $this->personService->findPerson($args['id']);
+
+        if(is_null($personObject)){
+            $personObject = [];
+        }
 
         $serializer = SerializerBuilder::create()->build();
         $personArray = json_decode($serializer->serialize($personObject, 'json'),true);

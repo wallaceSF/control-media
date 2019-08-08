@@ -10,6 +10,7 @@ namespace App\Presentation\Factory\Person;
 
 
 use App\Application\Service\PersonApplicationService;
+use App\Domain\Contract\Application\ConnectionApplicationInterface;
 use App\Presentation\Factory\Person\PersonFactoryService;
 use Slim\Container;
 
@@ -17,7 +18,8 @@ class PersonApplicationFactoryService
 {
     public function __invoke(Container $container): PersonApplicationService
     {
-        $r = $container->get(PersonFactoryService::class);
-        return new PersonApplicationService($r);
+        $personService = $container->get(PersonFactoryService::class);
+        $connectionApplication = $container->get(ConnectionApplicationInterface::class);
+        return new PersonApplicationService($personService, $connectionApplication);
     }
 }
