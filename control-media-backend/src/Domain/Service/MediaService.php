@@ -97,8 +97,8 @@ class MediaService
     {
         /** @var Media $mediaObject */
         $mediaObject = $this->mediaRepository->find($id);
-
         if(empty($mediaObject)) {
+
             throw new Exception('media não encontrada', 400);
         }
 

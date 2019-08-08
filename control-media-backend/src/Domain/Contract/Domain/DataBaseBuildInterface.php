@@ -3,7 +3,9 @@
 namespace App\Domain\Contract\Domain;
 
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 interface DataBaseBuildInterface
 {
@@ -18,7 +20,7 @@ interface DataBaseBuildInterface
 
     /**
      * @param string $class
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return ObjectRepository|EntityRepository
      */
     public function getRepository(string $class);
 

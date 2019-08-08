@@ -8,24 +8,20 @@
 
 namespace App\Domain\Service;
 
+use App\Domain\Contract\Infrastruture\Repository\MediaPersonLoanRepositoryInterface;
 use App\Domain\Entity\MediaPersonLoan;
 use App\Domain\ValueObject\InfoLoanVO;
-use Doctrine\ORM\EntityManager;
 
 class MediaPersonLoanService
 {
     /**
-     * @var EntityManager
+     * @var MediaPersonLoanRepositoryInterface
      */
-    private $entityManager;
+    private $mediaPersonLoanRepository;
 
-    /**
-     * MediaService constructor.
-     * @param EntityManager $entityManager
-     */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(MediaPersonLoanRepositoryInterface $mediaPersonLoanRepository)
     {
-        $this->entityManager = $entityManager;
+        $this->mediaPersonLoanRepository = $mediaPersonLoanRepository;
     }
 
     /**
@@ -33,26 +29,26 @@ class MediaPersonLoanService
      */
     public function findAllMediaPersonLoan(): array
     {
-        return $this->entityManager->getRepository(MediaPersonLoan::class)->findAll();
+        return $this->mediaPersonLoanRepository->findAll();
     }
 
     public function returnDataPersonPickedUpBookHandler(int $mediaId): ?InfoLoanVO
     {
         /** @var MediaPersonLoan $check */
-        $check = $this->entityManager->getRepository(MediaPersonLoan::class)->findOneBy(
-            ['media'=> $mediaId],
-            ['returnedAt' => 'DESC']
-        );
+        $mediaPersonLoan = $this->mediaPersonLoanRepository->getLastestMediaData($mediaId);
 
-        $returnedAt = $check->getReturnedAt();
-        if(!empty($check) && is_null($returnedAt)){
+        if(is_null($mediaPersonLoan)){
+            return null;
+        }
+
+        $returnedAt = $mediaPersonLoan->getReturnedAt();
+        if(!empty($mediaPersonLoan) && is_null($returnedAt)){
             $inforLoanVO = new InfoLoanVO();
-            $inforLoanVO->person = $check->getPerson();
+            $inforLoanVO->person = $mediaPersonLoan->getPerson();
             $inforLoanVO->borrowed = true;
             return $inforLoanVO;
         }
 
         return null;
     }
-
 }
