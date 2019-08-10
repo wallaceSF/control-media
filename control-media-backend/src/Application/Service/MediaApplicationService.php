@@ -25,8 +25,10 @@ class MediaApplicationService implements MediaApplicationServiceInterface
      * @param MediaService $media
      * @param ConnectionApplicationInterface $connectionApplication
      */
-    public function __construct(MediaService $media, ConnectionApplicationInterface $connectionApplication)
-    {
+    public function __construct(
+        MediaService $media,
+        ConnectionApplicationInterface $connectionApplication
+    ) {
         $this->media = $media;
         $this->connectionApplication = $connectionApplication;
     }
@@ -106,4 +108,5 @@ class MediaApplicationService implements MediaApplicationServiceInterface
     public function findBy($firstResult, $maxResult, $columnOrder, $order){
         return $this->media->findBy($firstResult,$maxResult,$columnOrder,$order);
     }
+
 }
