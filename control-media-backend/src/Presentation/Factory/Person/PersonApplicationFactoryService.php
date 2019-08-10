@@ -8,10 +8,8 @@
 
 namespace App\Presentation\Factory\Person;
 
-
 use App\Application\Service\PersonApplicationService;
 use App\Domain\Contract\Application\ConnectionApplicationInterface;
-use App\Presentation\Factory\Person\PersonFactoryService;
 use Slim\Container;
 
 class PersonApplicationFactoryService

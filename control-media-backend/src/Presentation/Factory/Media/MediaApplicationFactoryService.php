@@ -13,6 +13,8 @@ use App\Domain\Contract\Application\ConnectionApplicationInterface;
 use App\Domain\Contract\Domain\DataBaseBuildInterface;
 use App\Domain\Service\MediaService;
 use App\Infrastructure\Repository\MediaRepository;
+use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanFactoryService;
+use App\Presentation\Factory\Person\PersonFactoryService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 

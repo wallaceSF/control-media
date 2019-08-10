@@ -8,10 +8,8 @@
 
 namespace App\Presentation\Factory\Person;
 
-use App\Domain\Contract\Infrastruture\Repository\MediaRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\PersonRepositoryInterface;
 use App\Domain\Service\PersonService;
-use Doctrine\ORM\EntityManager;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 

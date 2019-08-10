@@ -9,7 +9,6 @@
 namespace App\Presentation\Factory\Person;
 
 use App\Handler\Person\UpdatePersonHandler;
-use App\Service\PersonService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
