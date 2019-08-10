@@ -14,7 +14,10 @@ abstract class BaseController
             return $this->handle($request, $response, $args);
         } catch (\Exception $e) {
             $statusCode = ($e->getCode() > 100) ? $e->getCode() : 500;
-            return $response->withJSON([$e->getMessage()], $statusCode,JSON_PRETTY_PRINT);
+            return $response->withJSON($e->getMessage(), $statusCode,JSON_PRETTY_PRINT);
+        } catch (\TypeError $e){
+            $statusCode = ($e->getCode() > 100) ? $e->getCode() : 500;
+            return $response->withJSON('A informação passada é incompatível', $statusCode,JSON_PRETTY_PRINT);
         }
     }
 
