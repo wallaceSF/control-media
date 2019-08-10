@@ -2,9 +2,9 @@
 
 namespace App\Domain\ValueObject;
 
-class InfoLoanVO
+class MediaPersonLoanVO
 {
+    public $id;
     public $person;
-    public $borrowed;
+    public $media;
 }
-
