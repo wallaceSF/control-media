@@ -8,5 +8,5 @@ interface MediaApplicationServiceInterface
 {
     public function findAllMedia(): array;
     public function findMedia(int $id): ?Media;
-    public function createMedia($r): ?Media;
+    public function createMedia($media): ?Media;
 }
