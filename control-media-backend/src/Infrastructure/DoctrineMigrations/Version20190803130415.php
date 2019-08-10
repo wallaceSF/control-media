@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DoctrineMigrations;
+namespace App\Infrasstructure\DoctrineMigrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
@@ -19,8 +19,7 @@ final class Version20190803130415 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        $this->addSql("INSERT INTO media_status (id, description) VALUES (1, 'Disponivel');");
-        $this->addSql("INSERT INTO media_status (id, description) VALUES (2, 'Emprestado');");
+
     }
 
     public function down(Schema $schema) : void
