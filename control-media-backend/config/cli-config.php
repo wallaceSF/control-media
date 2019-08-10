@@ -8,7 +8,7 @@ require __DIR__ . '/../vendor/autoload.php';
 $container = require 'settings.php';
 
 $config = Setup::createXMLMetadataConfiguration(
-    [__DIR__ . '/../src/App/Mapping'],
+    [__DIR__ . '/../src/Infrastructure/Mapping'],
     true,
     null,
     null
@@ -20,5 +20,6 @@ try {
     var_dump($e);
     exit;
 }
+
 
 return ConsoleRunner::createHelperSet($entityManager);

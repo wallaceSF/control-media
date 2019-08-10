@@ -13,13 +13,16 @@ use App\Domain\Contract\Infrastruture\Repository\PersonRepositoryInterface;
 use App\Domain\Service\DatabaseBuild;
 use App\Infrastructure\Repository\MediaPersonLoanRepository;
 use App\Presentation\Factory\Media\CreateMediaFactoryHandler;
+use App\Presentation\Factory\Media\FacadeCreateMediaFactoryHandler;
 use App\Presentation\Factory\Media\FindByMediaFactoryHandler;
 use App\Presentation\Factory\Media\MediaApplicationFactoryService;
 use App\Presentation\Factory\Media\MediaFactoryRepository;
 use App\Presentation\Factory\Media\MediaTypeFactoryRepository;
+use App\Presentation\Factory\MediaPersonLoan\CreateMediaPersonLoanFactoryHandler;
 use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanApplicationFactoryService;
 use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanFactoryRepository;
 use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanFactoryService;
+use App\Presentation\Factory\MediaPersonLoan\ReturnMediaPersonLoanFactoryHandler;
 use App\Presentation\Factory\Person\FindPersonFactoryHandler;
 use App\Presentation\Factory\Person\PersonApplicationFactoryService;
 use App\Presentation\Factory\MediaPersonLoan\ReturnDataPersonPickedUpBookFactoryHandler;
@@ -60,10 +63,10 @@ return function (App $app) {
         return $logger;
     };
 
-
     //Handler
     $container[FindMediaFactoryHandler::class] = new FindMediaFactoryHandler();
     $container[FindByMediaFactoryHandler::class] = new FindByMediaFactoryHandler();
+    //$container[FacadeCreateMediaFactoryHandler::class] = new FacadeCreateMediaFactoryHandler();
 
     $container[FindAllMediaFactoryHandler::class] = new FindAllMediaFactoryHandler();
     $container[CreateMediaFactoryHandler::class] = new CreateMediaFactoryHandler();
@@ -77,12 +80,13 @@ return function (App $app) {
     $container[DeletePersonFactoryHandler::class] = new DeletePersonFactoryHandler();
 
     $container[ReturnDataPersonPickedUpBookFactoryHandler::class] = new ReturnDataPersonPickedUpBookFactoryHandler();
+    $container[CreateMediaPersonLoanFactoryHandler::class] = new CreateMediaPersonLoanFactoryHandler();
+    $container[ReturnMediaPersonLoanFactoryHandler::class] = new ReturnMediaPersonLoanFactoryHandler();
 
     //Application
     $container[MediaApplicationServiceInterface::class] = new MediaApplicationFactoryService();
     $container[PersonApplicationServiceInterface::class] = new PersonApplicationFactoryService();
     $container[MediaPersonLoanApplicationServiceInterface::class] = new MediaPersonLoanApplicationFactoryService();
-
 
     $container[ConnectionApplicationInterface::class] = function (Container $container) {
         return new \App\Domain\Service\ConnectionApplication($container->get('connection'));
@@ -92,7 +96,6 @@ return function (App $app) {
     $container[MediaFactoryService::class] = new MediaFactoryService();
     $container[PersonFactoryService::class] = new PersonFactoryService();
     $container[MediaPersonLoanFactoryService::class] = new MediaPersonLoanFactoryService();
-
 
     //Repository
     $container[MediaRepositoryInterface::class] = new MediaFactoryRepository();
@@ -109,7 +112,9 @@ return function (App $app) {
             null
         );
 
-        return EntityManager::create($container['settings']['doctrine']['connection'], $config);
+        $entity =  EntityManager::create($container['settings']['doctrine']['connection'], $config);
+        //var_dump($entity);
+        return $entity;
     };
 
     $container[DataBaseBuildInterface::class] = function (Container $container) {

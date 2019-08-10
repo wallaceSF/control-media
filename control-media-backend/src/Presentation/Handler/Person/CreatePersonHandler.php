@@ -2,7 +2,6 @@
 
 namespace App\Presentation\Handler\Person;
 
-use App\Application\Service\MediaApplicationService;
 use App\Application\Service\PersonApplicationService;
 use App\BaseProject\BaseController;
 use App\Domain\Service\PersonService;

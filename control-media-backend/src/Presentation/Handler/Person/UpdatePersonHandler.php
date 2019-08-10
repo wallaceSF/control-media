@@ -5,8 +5,6 @@ namespace App\Handler\Person;
 use App\BaseProject\BaseController;
 use App\Domain\Service\PersonService;
 use App\Domain\ValueObject\InfoLoanVO;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use JsonMapper;
 use JsonMapper_Exception;
 use Psr\Http\Message\ResponseInterface;

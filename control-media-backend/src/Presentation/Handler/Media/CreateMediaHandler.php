@@ -6,8 +6,7 @@ use App\Application\Service\MediaApplicationService;
 use App\BaseProject\BaseController;
 use App\Domain\Service\MediaService;
 use App\Domain\ValueObject\MediaVO;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
+use Exception;
 use JsonMapper;
 use JsonMapper_Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -22,8 +21,8 @@ class CreateMediaHandler extends BaseController
     private $mediaService;
 
     /**
-     * MediaController constructor.
-     * @param MediaService $mediaService
+     * CreateMediaHandler constructor.
+     * @param MediaApplicationService $mediaService
      */
     public function __construct(MediaApplicationService $mediaService)
     {
@@ -35,9 +34,8 @@ class CreateMediaHandler extends BaseController
      * @param Response $response
      * @param array $args
      * @return ResponseInterface
-     * @throws ORMException
-     * @throws OptimisticLockException
      * @throws JsonMapper_Exception
+     * @throws Exception
      */
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {

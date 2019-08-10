@@ -1,7 +1,9 @@
 <?php
 
 use App\Presentation\Factory\Media\CreateMediaFactoryHandler;
+use App\Presentation\Factory\MediaPersonLoan\CreateMediaPersonLoanFactoryHandler;
 use App\Presentation\Factory\MediaPersonLoan\ReturnDataPersonPickedUpBookFactoryHandler;
+use App\Presentation\Factory\MediaPersonLoan\ReturnMediaPersonLoanFactoryHandler;
 use App\Presentation\Factory\Person\CreatePersonFactoryHandler;
 use App\Presentation\Factory\Media\DeleteMediaFactoryHandler;
 use App\Presentation\Factory\Person\DeletePersonFactoryHandler;
@@ -12,6 +14,7 @@ use App\Presentation\Factory\Media\FindMediaFactoryHandler;
 use App\Presentation\Factory\Person\FindPersonFactoryHandler;
 use App\Presentation\Factory\Media\UpdateMediaFactoryHandler;
 use App\Presentation\Factory\Person\UpdatePersonFactoryHandler;
+use App\Presentation\Handler\Media\FacadeCreateMediaHandler;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -41,4 +44,6 @@ return function (App $app) {
     $app->delete("/person/{id}", DeletePersonFactoryHandler::class);
 
     $app->get("/getDataPersonLoan/{mediaId}", ReturnDataPersonPickedUpBookFactoryHandler::class);
+    $app->post("/media-person-loan/create/", CreateMediaPersonLoanFactoryHandler::class);
+    $app->put("/media-person-loan/update/", ReturnMediaPersonLoanFactoryHandler::class);
 };

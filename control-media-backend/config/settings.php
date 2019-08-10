@@ -29,6 +29,15 @@ return [
                 'dbname' => 'test_db',
                 'user' => 'devuser',
                 'password' => 'devpass'
+            ],
+
+            'connection_unit_test' => [
+                'driver' => 'pdo_mysql',
+                'port' => 3306,
+                'host' => 'db_test_unit',
+                'dbname' => 'test_db',
+                'user' => 'devuser',
+                'password' => 'devpass'
             ]
         ]
     ],

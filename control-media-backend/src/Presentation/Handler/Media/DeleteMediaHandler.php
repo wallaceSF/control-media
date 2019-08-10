@@ -17,8 +17,8 @@ class DeleteMediaHandler extends BaseController
     private $mediaService;
 
     /**
-     * MediaController constructor.
-     * @param MediaService $mediaService
+     * DeleteMediaHandler constructor.
+     * @param MediaApplicationService $mediaService
      */
     public function __construct(MediaApplicationService $mediaService)
     {
@@ -30,6 +30,7 @@ class DeleteMediaHandler extends BaseController
      * @param Response $response
      * @param array $args
      * @return ResponseInterface
+     * @throws \Exception
      */
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {

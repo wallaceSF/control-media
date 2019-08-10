@@ -5,7 +5,6 @@ namespace App\Presentation\Handler\Media;
 use App\Application\Service\MediaApplicationService;
 use App\BaseProject\BaseController;
 use App\Domain\Entity\Media;
-use App\Domain\Service\MediaService;
 
 use JMS\Serializer\SerializerBuilder;
 use Psr\Http\Message\ResponseInterface;
@@ -33,6 +32,7 @@ class FindByMediaHandler extends BaseController
      * @param Response $response
      * @param array $args
      * @return ResponseInterface
+     * @throws \Exception
      */
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {
