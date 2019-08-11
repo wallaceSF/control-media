@@ -1,5 +1,5 @@
 # Control Media
-Projeto com o objetivo de controle de midía
+Projeto com o objetivo de controle de mídia
 
 ## Levantando ambiente
 Antes de tudo tenha instalado em sua máquina o `docker` e `docker-compose`.
