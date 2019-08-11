@@ -1,4 +1,4 @@
-#Control Media
+# Control Media
 Projeto com o objetivo de controle de midía
 
 ## Levantando ambiente
@@ -9,8 +9,7 @@ Entre na raiz do projeto e inicialize os containers com o comando `docker-compos
 
 OBS: dependendo das condições da conexão e de sua máquina, esse processo pode levar alguns minutos.
 
-##Teste Unitário
-
+## Teste Unitário
 Para Rodar o teste unitário roda esse seguinte comando:
 
 `docker exec -it php_web composer run-script --dev test`
@@ -22,10 +21,10 @@ Para acessar entre na barra de endereço com essa url:
 
 `http://localhost:8100/` para o back, a api em si
 
-##Observação
+## Observação
 Você deve se certificar que as portas(3100, 3306, 9906, 9907 e 8100) não estão sendo utilizada.
 
-##Dicas importantes
+## Dicas importantes
 Os containers são levantados e em seguida roda todos os comandos normalmente, mas caso tenha algum problema de conexão pode ocorrer de certos comandos não serem executados pefeitamente
 
 - docker exec -it php_web ./vendor/bin/doctrine-migrations migrate --no-interaction `(faz inserção de informações no banco)`
