@@ -22,7 +22,7 @@ return function (App $app) {
     $container = $app->getContainer();
 
     $app->get('/[{name}]', function (Request $request, Response $response, array $args) use ($container) {
-        return time();
+        return $response->withJSON(['apk' => time()], 200, JSON_PRETTY_PRINT);
     });
 
     $app->get("/media/", FindAllMediaFactoryHandler::class);
