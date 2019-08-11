@@ -25,7 +25,7 @@ Para acessar entre na barra de endereço com essa url:
 Você deve se certificar que as portas(3100, 3306, 9906, 9907 e 8100) não estão sendo utilizada.
 
 ## Dicas importantes
-Os containers são levantados e em seguida roda todos os comandos normalmente, mas caso tenha algum problema de conexão pode ocorrer de certos comandos não serem executados pefeitamente
+Os containers são levantados e em seguida rodão todos os comandos normalmente, mas caso tenha algum problema de conexão pode ocorrer de certos comandos não serem executados perfeitamente
 
 - docker exec -it php_web ./vendor/bin/doctrine-migrations migrate --no-interaction `(faz inserção de informações no banco)`
 - docker exec -it php_web ./vendor/bin/doctrine orm:schema-tool:update --force `(atualiza as tabelas no banco)` 
