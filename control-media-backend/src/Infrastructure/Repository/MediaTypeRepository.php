@@ -4,7 +4,6 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Contract\Domain\DataBaseBuildInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaTypeRepositoryInterface;
-use App\Domain\Entity\Media;
 use App\Domain\Entity\MediaType;
 
 class MediaTypeRepository implements MediaTypeRepositoryInterface

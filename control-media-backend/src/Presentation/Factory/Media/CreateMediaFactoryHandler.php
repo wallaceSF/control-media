@@ -17,7 +17,6 @@ class CreateMediaFactoryHandler
      */
     public function __invoke(Container $container): CreateMediaHandler
     {
-        /** @var MediaService $mediaService */
         $mediaService = $container->get(MediaApplicationServiceInterface::class);
         return new CreateMediaHandler($mediaService);
     }

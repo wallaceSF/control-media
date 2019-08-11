@@ -4,8 +4,6 @@ namespace App\Presentation\Factory\Person;
 
 use App\Domain\Contract\Application\PersonApplicationServiceInterface;
 use App\Presentation\Handler\Person\CreatePersonHandler;
-use App\Domain\Service\PersonService;
-
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 

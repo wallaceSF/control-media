@@ -17,7 +17,6 @@ class FindByMediaFactoryHandler
      */
     public function __invoke(Container $container): FindByMediaHandler
     {
-        /** @var MediaService $mediaService */
         $mediaService = $container->get(MediaApplicationServiceInterface::class);
         return new FindByMediaHandler($mediaService);
     }

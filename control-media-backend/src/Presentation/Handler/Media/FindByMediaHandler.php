@@ -5,7 +5,6 @@ namespace App\Presentation\Handler\Media;
 use App\Application\Service\MediaApplicationService;
 use App\BaseProject\BaseController;
 use App\Domain\Entity\Media;
-
 use JMS\Serializer\SerializerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Http\Request;

@@ -3,7 +3,6 @@
 namespace App\Domain\Service;
 
 use App\Domain\Contract\Infrastruture\Repository\PersonRepositoryInterface;
-use App\Domain\Entity\Media;
 use App\Domain\Entity\Person;
 use App\Domain\ValueObject\PersonVO;
 use DateTime;
@@ -16,14 +15,18 @@ class PersonService
      */
     private $personRepository;
 
-
     public function __construct(PersonRepositoryInterface $personRepository)
     {
         $this->personRepository = $personRepository;
     }
 
-    public function createPerson(PersonVO $mediaVO): ?Person {
-
+    /**
+     * @param PersonVO $mediaVO
+     * @return Person|null
+     * @throws Exception
+     */
+    public function createPerson(PersonVO $mediaVO): ?Person
+    {
         $mediaObject = new Person();
         $mediaObject->setName($mediaVO->name);
         $mediaObject->setDateOfBirth(new DateTime($mediaVO->dateOfBirth));
@@ -32,8 +35,6 @@ class PersonService
 
         return $mediaObject;
     }
-
-
 
     /**
      * @param PersonVO $personVO

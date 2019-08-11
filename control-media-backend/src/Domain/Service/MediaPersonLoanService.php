@@ -62,22 +62,20 @@ class MediaPersonLoanService
         /** @var MediaPersonLoan $check */
         $mediaPersonLoan = $this->mediaPersonLoanRepository->getLastestMediaData($mediaId);
 
-       // var_dump($mediaPersonLoan); die;
-
         if(is_null($mediaPersonLoan)){
             return null;
         }
 
         $returnedAt = $mediaPersonLoan->getReturnedAt();
         if(!empty($mediaPersonLoan) && !is_null($returnedAt)){
-//            var_dump('debug'); die;
           return null;
         }
 
-            $inforLoanVO = new InfoLoanVO();
-            $inforLoanVO->person = $mediaPersonLoan->getPerson();
-            $inforLoanVO->borrowed = true;
-            return $inforLoanVO;
+        $inforLoanVO = new InfoLoanVO();
+        $inforLoanVO->person = $mediaPersonLoan->getPerson();
+        $inforLoanVO->borrowed = true;
+
+        return $inforLoanVO;
     }
 
     /**

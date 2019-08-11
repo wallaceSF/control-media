@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Domain\Service;
-
 
 use App\Domain\Contract\Application\ConnectionApplicationInterface;
 

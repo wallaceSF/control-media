@@ -6,7 +6,6 @@ use App\Domain\Contract\Domain\DataBaseBuildInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaPersonLoanRepositoryInterface;
 use App\Domain\Entity\MediaPersonLoan;
 use App\Domain\ValueObject\MediaPersonLoanVO;
-use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class MediaPersonLoanRepository implements MediaPersonLoanRepositoryInterface
 {
@@ -30,7 +29,7 @@ class MediaPersonLoanRepository implements MediaPersonLoanRepositoryInterface
 
     public function getLastestMediaData($mediaId): ?MediaPersonLoan
     {
-        $sql = "SELECT * FROM media_person_loan where media = ? ORDER BY CASE WHEN returned_at IS NULL THEN 1 ELSE 0 END DESC, id desc, returned_at DESC limit 100 ";
+        $sql = "SELECT * FROM media_person_loan where media = ? ORDER BY CASE WHEN returned_at IS NULL THEN 1 ELSE 0 END DESC, id desc, returned_at DESC limit 1 ";
          
         $conn = $this->dataBaseBuild->getEntityManager()
             ->getConnection();       
@@ -58,7 +57,8 @@ class MediaPersonLoanRepository implements MediaPersonLoanRepositoryInterface
 
     public function findByPersonAndMedia(MediaPersonLoanVO $mediaPersonLoanVO): ?MediaPersonLoan
     {
-        $sql = "SELECT * FROM media_person_loan where media = ? ORDER BY CASE WHEN returned_at IS NULL THEN 1 ELSE 0 END DESC, id desc, returned_at DESC limit 100 ";
+        //redundancia esse metodo, depois tirar
+        $sql = "SELECT * FROM media_person_loan where media = ? ORDER BY CASE WHEN returned_at IS NULL THEN 1 ELSE 0 END DESC, id desc, returned_at DESC limit 1 ";
          
         $conn = $this->dataBaseBuild->getEntityManager()
             ->getConnection();       

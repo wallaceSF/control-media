@@ -33,7 +33,12 @@ class MediaRepository implements MediaRepositoryInterface
      * @return MediaPaginatorVO
      * @throws \Exception
      */
-    public function findAllMediaWithPagination(int $firstResult = 1, int $maxResults = 10, $columnOrder = 'media-id', $order = 'asc'): MediaPaginatorVO {
+    public function findAllMediaWithPagination(
+        int $firstResult = 1,
+        int $maxResults = 10,
+        $columnOrder = 'media-id',
+        $order = 'asc'
+    ): MediaPaginatorVO {
 
         $mediaPaginatorVO = new MediaPaginatorVO();
         if(!isset($mediaPaginatorVO->columnOrder[$columnOrder])){

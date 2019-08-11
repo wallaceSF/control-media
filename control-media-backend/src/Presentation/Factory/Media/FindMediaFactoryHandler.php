@@ -4,7 +4,6 @@ namespace App\Presentation\Factory\Media;
 
 use App\Domain\Contract\Application\MediaApplicationServiceInterface;
 use App\Presentation\Handler\Media\FindMediaHandler;
-use App\Domain\Service\MediaService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
@@ -17,7 +16,6 @@ class FindMediaFactoryHandler
      */
     public function __invoke(Container $container): FindMediaHandler
     {
-        /** @var MediaService $mediaService */
         $mediaService = $container->get(MediaApplicationServiceInterface::class);
         return new FindMediaHandler($mediaService);
     }

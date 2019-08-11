@@ -24,5 +24,10 @@ class MediaPaginatorVO
     /**
      * @var array
      */
-    public $columnOrder = ['media-id' => 'media.id', 'media-title' => 'media.title', 'media-description' => 'media.description', 'type-description'=>'type.description'];
+    public $columnOrder = [
+        'media-id' => 'media.id',
+        'media-title' => 'media.title',
+        'media-description' => 'media.description',
+        'type-description'=>'type.description'
+    ];
 }

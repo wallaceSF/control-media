@@ -14,7 +14,7 @@ class PersonApplicationService
      */
     private $personService;
     /**
-     * @var ConnectionApplication
+     * @var ConnectionApplicationInterface
      */
     private $connectionApplication;
 

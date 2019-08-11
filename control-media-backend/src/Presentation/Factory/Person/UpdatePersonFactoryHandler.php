@@ -21,7 +21,6 @@ class UpdatePersonFactoryHandler
      */
     public function __invoke(Container $container): UpdatePersonHandler
     {
-        /** @var PersonService $personService */
         $personService = $container->get(PersonFactoryService::class);
         return new UpdatePersonHandler($personService);
     }

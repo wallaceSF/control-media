@@ -3,11 +3,8 @@
 
 namespace App\Presentation\Factory\MediaPersonLoan;
 
-
 use App\Application\Service\MediaPersonLoanApplicationService;
-use App\Domain\Contract\Domain\DataBaseBuildInterface;
 use App\Domain\Service\MediaPersonLoanService;
-use App\Presentation\Factory\Media\MediaFactoryService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
@@ -15,7 +12,7 @@ class MediaPersonLoanApplicationFactoryService
 {
     /**
      * @param Container $container
-     * @return MediaPersonLoanService
+     * @return MediaPersonLoanApplicationService
      * @throws ContainerException
      */
     public function __invoke(Container $container): MediaPersonLoanApplicationService

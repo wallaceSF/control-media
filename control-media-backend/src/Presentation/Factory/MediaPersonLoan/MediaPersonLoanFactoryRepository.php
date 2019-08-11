@@ -10,10 +10,7 @@ namespace App\Presentation\Factory\MediaPersonLoan;
 
 use App\Domain\Contract\Domain\DataBaseBuildInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaPersonLoanRepositoryInterface;
-use App\Domain\Contract\Infrastruture\Repository\MediaTypeRepositoryInterface;
 use App\Infrastructure\Repository\MediaPersonLoanRepository;
-use App\Infrastructure\Repository\MediaTypeRepository;
-use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
 class MediaPersonLoanFactoryRepository
