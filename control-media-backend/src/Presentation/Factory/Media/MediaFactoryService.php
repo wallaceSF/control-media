@@ -13,6 +13,7 @@ use App\Domain\Contract\Infrastruture\Repository\MediaRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaTypeRepositoryInterface;
 use App\Domain\Service\MediaPersonLoanService;
 use App\Domain\Service\MediaService;
+use App\Presentation\Factory\MediaPersonLoan\MediaPersonLoanFactoryService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
 
@@ -33,7 +34,8 @@ class MediaFactoryService
         $mediaTypeRepository = $container->get(MediaTypeRepositoryInterface::class);
 
         /** @var MediaPersonLoanService $mediaPersonLoanService */
-        $mediaPersonLoanService = $container->get(MediaPersonLoanService::class);
+        $mediaPersonLoanService = $container->get(MediaPersonLoanFactoryService::class);
+
         return new MediaService($mediaRepository, $mediaTypeRepository, $mediaPersonLoanService);
     }
 }
