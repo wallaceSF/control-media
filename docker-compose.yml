@@ -1,0 +1,52 @@
+version: '3.2'
+
+services:
+  db_test_unit:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret_pw_shh
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpass
+    ports:
+      - "9907:3306"
+    networks:
+      - mynet
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret_pw_shh
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpass
+    ports:
+      - "9906:3306"
+    networks:
+      - mynet
+  php:
+    build: "./php"
+    container_name: php_web
+    depends_on:
+      - db
+    volumes:
+      - ./control-media-backend/:/var/www/html/
+    ports:
+      - "8100:8100"
+    working_dir: /var/www/html
+    command: bash -c "composer install && php ./vendor/bin/doctrine orm:schema-tool:update --force && php doctrine2.php  orm:schema-tool:update --force && php ./vendor/bin/doctrine-migrations migrate --no-interaction && php -S 0.0.0.0:8100 -t public"
+    networks:
+      - mynet
+  node:
+    build: "./node"   
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./control-media-front/:/usr/src/app 
+    command: bash -c "npm install && npm start"
+    depends_on:
+      - php
+    networks:
+      - mynet
+
+networks:
+  mynet:
