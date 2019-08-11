@@ -10,6 +10,7 @@ tmtags
 Thumbs.db
 Desktop.ini
 
+
 # ignore Composer downloads
 /vendor/*
 
@@ -17,3 +18,5 @@ Desktop.ini
 !.htaccess
 !/.gitignore
 !/.travis.yml
+.DS_Store
+.idea
