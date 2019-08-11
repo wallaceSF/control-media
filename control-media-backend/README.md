@@ -14,8 +14,6 @@ Projeto com o objetivo de controle de mídia
 | `/person/`                                                    |`get`   | Cria um novo registro.                                                       |
 | `/person/:id`                                                 |`get`   | retorna um registro de pessoa pelo id.                                       |
 | `/person/create/`                                             |`post`  | cria uma pessoa.                                                             |
-| `/person/update/`                                             |`put`   | atualiza uma pessoa cadastrada.                                              |
-| `/person/:id`                                                 |`delete`| apaga um registro pelo id.                                                   |
 | `/media-person-loan/create/`                                  |`post`  | cria um vinculo entre a pessoa e emprestimo (gera um emprestimo de mídia).   |
 | `/media-person-loan/update/`                                  |`put`   | devolve um emprestimo de uma mídia, liberando a midia para novos emprestimos |
 
