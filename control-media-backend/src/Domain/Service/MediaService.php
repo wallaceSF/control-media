@@ -8,6 +8,7 @@
 
 namespace App\Domain\Service;
 
+use App\Domain\Contract\Infrastruture\Repository\MediaPersonLoanRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaTypeRepositoryInterface;
 use App\Domain\Entity\Media;
@@ -27,13 +28,25 @@ class MediaService
      * @var MediaTypeRepositoryInterface
      */
     private $mediaTypeRepository;
+    /**
+     * @var MediaPersonLoanService
+     */
+    private $mediaPersonLoanService;
 
+    /**
+     * MediaService constructor.
+     * @param MediaRepositoryInterface $mediaRepository
+     * @param MediaTypeRepositoryInterface $mediaTypeRepository
+     * @param MediaPersonLoanService $mediaPersonLoanService
+     */
     public function __construct(
         MediaRepositoryInterface $mediaRepository,
-        MediaTypeRepositoryInterface $mediaTypeRepository
+        MediaTypeRepositoryInterface $mediaTypeRepository,
+        MediaPersonLoanService $mediaPersonLoanService
     ) {
         $this->mediaRepository = $mediaRepository;
         $this->mediaTypeRepository = $mediaTypeRepository;
+        $this->mediaPersonLoanService = $mediaPersonLoanService;
     }
 
     /**
@@ -98,8 +111,13 @@ class MediaService
         /** @var Media $mediaObject */
         $mediaObject = $this->mediaRepository->find($id);
         if(empty($mediaObject)) {
-
             throw new Exception('media não encontrada', 400);
+        }
+
+        $InfoLoanVO = $this->mediaPersonLoanService->returnDataPersonPickedUpBookHandler($mediaObject->getId());
+
+        if(!is_null($InfoLoanVO) && $InfoLoanVO->borrowed){
+            throw new \Exception('Essa mídia está em emprestimo, não pode ser deletada', 403);
         }
 
         $this->mediaRepository->remove($mediaObject);

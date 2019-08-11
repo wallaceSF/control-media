@@ -8,8 +8,10 @@
 
 namespace App\Presentation\Factory\Media;
 
+use App\Domain\Contract\Infrastruture\Repository\MediaPersonLoanRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaRepositoryInterface;
 use App\Domain\Contract\Infrastruture\Repository\MediaTypeRepositoryInterface;
+use App\Domain\Service\MediaPersonLoanService;
 use App\Domain\Service\MediaService;
 use Interop\Container\Exception\ContainerException;
 use Slim\Container;
@@ -23,11 +25,15 @@ class MediaFactoryService
      */
     public function __invoke(Container $container): MediaService
     {
+        //criar interfaces para service
         /** @var MediaRepositoryInterface $mediaRepository */
         $mediaRepository = $container->get(MediaRepositoryInterface::class);
 
         /** @var MediaTypeRepositoryInterface $mediaTypeRepository */
         $mediaTypeRepository = $container->get(MediaTypeRepositoryInterface::class);
-        return new MediaService($mediaRepository, $mediaTypeRepository);
+
+        /** @var MediaPersonLoanService $mediaPersonLoanService */
+        $mediaPersonLoanService = $container->get(MediaPersonLoanService::class);
+        return new MediaService($mediaRepository, $mediaTypeRepository, $mediaPersonLoanService);
     }
 }

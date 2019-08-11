@@ -68,7 +68,7 @@ class MediaPersonLoanService
 
         $returnedAt = $mediaPersonLoan->getReturnedAt();
         if(!empty($mediaPersonLoan) && !is_null($returnedAt)){
-          return null;
+            return null;
         }
 
         $inforLoanVO = new InfoLoanVO();

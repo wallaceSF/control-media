@@ -2,33 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88b409af-d6b7-475f-b009-cb96f515b9d5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/control-media-backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/control-media-backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.phpunit.result.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.phpunit.result.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.md" beforeDir="false" afterPath="$PROJECT_DIR$/CONTRIBUTING.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/logs/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations.yml" beforeDir="false" afterPath="$PROJECT_DIR$/migrations.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpunit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/phpunit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BaseProject/BaseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/BaseProject/BaseController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/DoctrineMigrations/Version20190803130415.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/DoctrineMigrations/Version20190803130415.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Infrastructure/DoctrineMigrations/Version20190803132406.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/DoctrineMigrations/Version20190803132406.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Presentation/Middleware/empty" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/Middleware/empty" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Functional/BaseTestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Functional/BaseTestCase.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Functional/HomepageTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Functional/HomepageTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Service/MediaPersonLoanService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Service/MediaPersonLoanService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Domain/Service/MediaService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Domain/Service/MediaService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Presentation/Factory/Media/MediaFactoryService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/Factory/Media/MediaFactoryService.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -199,7 +178,9 @@
       <workItem from="1565128456263" duration="11096000" />
       <workItem from="1565218176589" duration="10585000" />
       <workItem from="1565310601527" duration="6684000" />
-      <workItem from="1565472676090" duration="6711000" />
+      <workItem from="1565472676090" duration="6824000" />
+      <workItem from="1565527211815" duration="6691000" />
+      <workItem from="1565564726445" duration="1760000" />
     </task>
     <servers />
   </component>

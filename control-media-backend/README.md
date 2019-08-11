@@ -1,84 +1,37 @@
-# Control Media API
-Projeto com o objetivo de controle de mídia
+#Control Media
+Projeto com o objetivo de controle de midía
 
-## Api's
+## Levantando ambiente
+Antes de tudo tenha instalado em sua máquina o `docker` e `docker-compose`.
 
-| EndPoints                                                     | Tipo   | Descrição                                                                    |
-| ------------------------------------------------------------- | ------ | -----------------------------------------------------------------------------| 
-| `/media/`                                                     |`get`   | retorna uma lista de mídia                                                   |
-| `/media/:id`                                                  |`get`   | retorna um registro pelo id.                                                 |
-| `/media/create/`                                              |`post`  | Cria um novo registro.                                                       |
-| `/media/update/`                                              |`put`   | Atualiza um cadastrado pelo id.                                              |
-| `/media/:id`                                                  |`delete`| apaga um registro pelo id.                                                   |
-| `/media/find-by/:firstResult/:maxResult/:columnOrder/:order/` |`get`   | retorna uma lista de mídia com paginação.                                    |
-| `/person/`                                                    |`get`   | Cria um novo registro.                                                       |
-| `/person/:id`                                                 |`get`   | retorna um registro de pessoa pelo id.                                       |
-| `/person/create/`                                             |`post`  | cria uma pessoa.                                                             |
-| `/media-person-loan/create/`                                  |`post`  | cria um vinculo entre a pessoa e emprestimo (gera um emprestimo de mídia).   |
-| `/media-person-loan/update/`                                  |`put`   | devolve um emprestimo de uma mídia, liberando a midia para novos emprestimos |
+Após o processo acima.
+Entre na raiz do projeto e inicialize os containers com o comando `docker-compose up`.
 
-## Exemplos de alguns request's - Curl
+OBS: dependendo das condições da conexão e de sua máquina, esse processo pode levar alguns minutos.
 
-##POST
+##Teste Unitário
 
-Adicionar mais um novo registro de mídia :
+Para Rodar o teste unitário roda esse seguinte comando:
 
-    curl -X POST \
-      http://localhost:8100/media/create/ \                  
-      -H 'Connection: keep-alive' \
-      -H 'Content-Type: application/json' \      
-      -H 'cache-control: no-cache' \
-      -d '{
-        "title" : "Michael",
-        "description": "Michal the champion 2010",
-        "type": 1
-    }'
+`docker exec -it php_web composer run-script --dev test`
 
-##GET
-Retorna uma midia cadastrado pelo id
+## Acessando o projeto
+Para acessar entre na barra de endereço com essa url: 
 
-    curl -X GET \
-      http://localhost:8100/media/1 \  
-      -H 'cache-Control: no-cache'      
+`http://localhost:3000/` para o front com acesso a api
 
-Retorna uma lista de mídias com paginação.
+`http://localhost:8100/` para o back, a api em si
 
-OBS: parametros para ordenação : `media-id, media-title, media-description, type-description`  
+##Observação
+Você deve se certificar que as portas(3100, 3306, 9906, 9907 e 8100) não estão sendo utilizada.
 
-      curl -X GET \
-      http://localhost:8100/media/find-by/1/5/media-id/asc/ \      
-      -H 'Cache-Control: no-cache' \      
-      -H 'User-Agent: PostmanRuntime/7.15.2' \
-      -H 'cache-control: no-cache'
+##Dicas importantes
+Os containers são levantados e em seguida roda todos os comandos normalmente, mas caso tenha algum problema de conexão pode ocorrer de certos comandos não serem executados pefeitamente
 
-Retorna todos as mídias cadastradas.
- 
-    curl -X GET \
-      http://localhost:8100/media/ \
-      -H 'cache-control: no-cache'
-
-##DELETE
-Apaga um registro do planeta pelo id.
-    
-    curl -X DELETE \
-      http://localhost:8100/media/2 \
-      -H 'cache-control: no-cache'
-      
-##UPDATE
-
-Adicionar mais um novo registro de mídia :
-
-    curl -X PUT \
-      http://localhost:8100/media/update/ \                  
-      -H 'Connection: keep-alive' \
-      -H 'Content-Type: application/json' \      
-      -H 'cache-control: no-cache' \
-      -d '{
-        "title" : "Michael",
-        "description": "Michal the champion 2020",
-        "type": 1
-    }'      
-
+- docker exec -it php_web ./vendor/bin/doctrine-migrations migrate --no-interaction `(faz inserção de informações no banco)`
+- docker exec -it php_web ./vendor/bin/doctrine orm:schema-tool:update --force `(atualiza as tabelas no banco)` 
+- docker exec -it php_web composer install `(instala as dependências do php)`
+- docker exec -it php_web composer run-script --dev test `(roda teste unitário)`
 
 ## Dúvidas
 Qualquer dúvida entre em contato com wallace.sf87@gmail.com
