@@ -9,7 +9,12 @@ Session.vim
 tmtags
 Thumbs.db
 Desktop.ini
-
+node_modules/
+node_modules
+build
+npm-debug.log
+.env
+.DS_Store
 
 # ignore Composer downloads
 /vendor/*
@@ -19,4 +24,5 @@ Desktop.ini
 !/.gitignore
 !/.travis.yml
 .DS_Store
+.idea
 .idea
