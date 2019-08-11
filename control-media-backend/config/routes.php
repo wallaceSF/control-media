@@ -14,7 +14,6 @@ use App\Presentation\Factory\Media\FindMediaFactoryHandler;
 use App\Presentation\Factory\Person\FindPersonFactoryHandler;
 use App\Presentation\Factory\Media\UpdateMediaFactoryHandler;
 use App\Presentation\Factory\Person\UpdatePersonFactoryHandler;
-use App\Presentation\Handler\Media\FacadeCreateMediaHandler;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -23,11 +22,7 @@ return function (App $app) {
     $container = $app->getContainer();
 
     $app->get('/[{name}]', function (Request $request, Response $response, array $args) use ($container) {
-        // Sample log message
-        $container->get('logger')->info("Slim-Skeleton '/' route");
-
-        // Render index view
-        return $container->get('renderer')->render($response, 'index.phtml', $args);
+        return time();
     });
 
     $app->get("/media/", FindAllMediaFactoryHandler::class);
