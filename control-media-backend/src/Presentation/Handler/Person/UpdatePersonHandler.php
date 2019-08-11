@@ -37,10 +37,10 @@ class UpdatePersonHandler extends BaseController
      */
     public function handle(Request $request, Response $response, array $args): ResponseInterface
     {
-        $r = ['id' => 1, 'title' => 'Teste Livro', 'description' => 'Livro exemplo', 'type' => 1];
+        die('in Develpment');
 
         /** @var InfoLoanVO $personVO */
-        $personVO = (new JsonMapper())->map(json_decode(json_encode($r)), new InfoLoanVO());
+        $personVO = (new JsonMapper())->map(json_decode(json_encode($request->getBody()->getContents())), new InfoLoanVO());
         $this->personService->updatePerson($personVO);
         return $response->withJSON([],201,JSON_PRETTY_PRINT);
     }
