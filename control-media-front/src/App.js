@@ -35,8 +35,10 @@ class App extends Component {
     };
 
     async changeLimit(event) {
-        await this.setState({per_page: event.target.options.selectedIndex});
-        await this.makeHttpRequestWithPage(1);
+        if(event.target.options.selectedIndex != 0){
+          await this.setState({per_page: event.target.options.selectedIndex});
+          await this.makeHttpRequestWithPage(1);
+        }
     }
 
     render = _ => {
@@ -101,7 +103,7 @@ class App extends Component {
                     <option value={8}>8</option>
                     <option value={9}>9</option>                    
                     <option value={10}>10</option>
-                </select>
+                </select>                
 
                 <table className={styles.table}>
                     <thead>
