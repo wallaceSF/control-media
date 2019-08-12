@@ -57,6 +57,11 @@ class MediaPersonLoanService
         return $this->mediaPersonLoanRepository->findAll();
     }
 
+    public function findAllMediaPersonLoanByMedia(int $mediaId): array
+    {
+        return $this->mediaPersonLoanRepository->findBy(['media' => $mediaId]);
+    }
+
     public function returnDataPersonPickedUpBookHandler(int $mediaId): ?InfoLoanVO
     {
         /** @var MediaPersonLoan $check */
