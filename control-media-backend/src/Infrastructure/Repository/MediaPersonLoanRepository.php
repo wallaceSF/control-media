@@ -75,4 +75,19 @@ class MediaPersonLoanRepository implements MediaPersonLoanRepositoryInterface
 
         return $mediaPersonLoan;
     }
+
+    /**
+     * @param array $paramsMediaPersonLoan
+     * @return MediaPersonLoan[]|array
+     */
+    public function findBy(array $paramsMediaPersonLoan): array
+    {
+        /** @var MediaPersonLoan[] $mediaPersonLoanList */
+        $mediaPersonLoanList = $this->dataBaseBuild->getRepository(MediaPersonLoan::class)->findBy(
+            $paramsMediaPersonLoan,
+            ['id' => 'DESC']
+        );
+
+        return $mediaPersonLoanList;
+    }
 }
