@@ -33,7 +33,7 @@ services:
     ports:
       - "8100:8100"
     working_dir: /var/www/html
-    command: bash -c "composer install && php ./vendor/bin/doctrine orm:schema-tool:update --force && php doctrine2.php  orm:schema-tool:update --force && php ./vendor/bin/doctrine-migrations migrate --no-interaction && php -S 0.0.0.0:8100 -t public"
+    command: bash -c "composer clearcache && composer install && php ./vendor/bin/doctrine orm:schema-tool:update --force && php doctrine2.php  orm:schema-tool:update --force && php ./vendor/bin/doctrine-migrations migrate --no-interaction && php -S 0.0.0.0:8100 -t public"
     networks:
       - mynet
   node:

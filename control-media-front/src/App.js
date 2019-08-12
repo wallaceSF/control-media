@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import styles from './App.module.css';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 class App extends Component {
     state = {
         listMedia: null,
-        total: null,
+        total: 5,
         per_page: 5,
         current_page: 1
     };
@@ -17,6 +17,9 @@ class App extends Component {
     }
 
     makeHttpRequestWithPage = async pageNumber => {
+        if (pageNumber == undefined){
+            return;
+        }
         const response = await fetch(`http://localhost:8100/media/find-by/${pageNumber}/${this.state.per_page}/media-id/asc/`, {
             method: 'GET'
         });
@@ -65,7 +68,11 @@ class App extends Component {
             for (let i = 1; i <= valueCeil; i++) {
                 pageNumbers.push(i);
             }
-            lastPage = Math.max.apply(Math, pageNumbers)          
+            lastPage = Math.max.apply(Math, pageNumbers);
+
+            if(lastPage == '-Infinity') {
+                lastPage = 1;
+            }       
 
             renderPageNumbers = pageNumbers.map(number => {
                 let classes = this.state.current_page === number ? styles.active : '';
@@ -117,11 +124,16 @@ class App extends Component {
                     {mediaBuild}
                     </tbody>
                 </table>
-                <div className={styles.pagination}>
+
+                  <div className={styles.pagination}>
                     <span onClick={() => this.makeHttpRequestWithPage(1)}>&laquo;</span>
                     {renderPageNumbers}
-                    <span onClick={() => this.makeHttpRequestWithPage(lastPage)}>&raquo;</span>
-                </div>
+                   <span onClick={() => this.makeHttpRequestWithPage(lastPage)}>&raquo;</span>
+                 </div>
+                
+          
+                   
+            
 
             </div>
         );
