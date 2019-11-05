@@ -79,7 +79,7 @@ class DatabaseBuild implements DataBaseBuildInterface
      * @param string $class
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
-    public function getRepository(string $class)
+    public function getRepository($class)
     {
         return $this->repository->getRepository($class);
     }
