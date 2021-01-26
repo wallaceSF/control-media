@@ -49,8 +49,9 @@ stages:
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
         php composer-setup.php --version=1.10.13 --install-dir=/bin
         composer
+        /bin/composer --version
 
-        cd control-media-backend && php /bin/composer.phar install --no-interaction --prefer-dist
+        cd control-media-backend && /bin/composer install --no-interaction --prefer-dist
       displayName: Build Application
 
   - job: UnitTests
