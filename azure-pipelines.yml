@@ -64,7 +64,8 @@ stages:
         php -version          
     - script: |    
         pwd && ls -la
-        cd control-media-backend && vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+        echo $(System.DefaultWorkingDirectory)
+        control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact
