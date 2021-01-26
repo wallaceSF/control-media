@@ -47,11 +47,11 @@ stages:
         php -version 
         ls
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --version=1.10.13 --install-dir=/bin
+        php composer-setup.php --version=1.10.13 --install-dir=./
         composer
-        /bin/composer --version
+        ./composer --version
 
-        cd control-media-backend && /bin/composer install --no-interaction --prefer-dist
+        cd control-media-backend && ./composer install --no-interaction --prefer-dist
       displayName: Build Application
 
   - job: UnitTests
