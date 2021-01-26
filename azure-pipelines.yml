@@ -33,7 +33,7 @@ stages:
     - script: composer install --no-interaction --prefer-dist
       displayName: 'composer install'
 
-- stage: BuildApp
+- stage: BuildAppc
   jobs:        
   - job: CheckVersion
     steps: 
