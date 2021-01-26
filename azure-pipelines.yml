@@ -17,7 +17,7 @@ variables:
 stages:
 - stage: BuildApp
   jobs:   
-  - job: CheckVersion
+  - job: CheckVebrsion
     steps: 
     - script: |
         apt-get install php72
