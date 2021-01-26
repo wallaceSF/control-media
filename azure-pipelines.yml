@@ -30,17 +30,37 @@ stages:
     - bash: env
       displayName: Show environment variables     
   - job: Build
-  dependsOn: 
-  - CheckVersion
-  condition: succeeded()
-  steps: 
-  - script: |
-      sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-      sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-      sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-      sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-      sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-      php -version             
-      displayName: 'Use PHP version $(phpVersion)'   
-  - bash: env
-    displayName: Show environment variables            
+    dependsOn: 
+    - CheckVersion
+    condition: succeeded()
+    steps:   
+    - script: |
+        pwd && ls -la 
+        cd control-media-backend && composer install --no-interaction --prefer-dist
+      displayName: Build Application
+    - task: PublishPipelineArtifact@1
+      displayName: Store Application Artifact
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/artifact
+        artifact: $(main_project_name)
+    - script: |
+        pwd && ls -la
+        ls (System.DefaultWorkingDirectory)       
+  - job: UnitTests
+    dependsOn: 
+    - Build
+    condition: succeeded()
+    steps:   
+    - script: |
+        pwd && ls -la
+        cd control-media-backend && vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+      displayName: Build Applicathion
+    - task: PublishPipelineArtifact@1
+      displayName: Store Application Artifact
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/artifact
+        artifact: $(main_project_name)
+    - script: |
+        pwd && ls -la
+        ls (System.DefaultWorkingDirectory)        
+      
