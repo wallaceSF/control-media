@@ -12,4 +12,5 @@ steps:
     sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
     sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
     php -version
+    ls /usr/bin/
   displayName: 'Use PHP version $(phpVersion)'
