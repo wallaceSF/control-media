@@ -47,6 +47,7 @@ stages:
         php -version 
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
         php composer-setup.php --version=1.10.13
+        composer
 
         cd control-media-backend && php composer.phar install --no-interaction --prefer-dist
       displayName: Build Application
