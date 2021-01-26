@@ -45,11 +45,12 @@ stages:
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
         php -version 
+        ls
         php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php composer-setup.php --version=1.10.13
+        php composer-setup.php --version=1.10.13 --install-dir=/bin
         composer
 
-        cd control-media-backend && php composer.phar install --no-interaction --prefer-dist
+        cd control-media-backend && php /bin/composer.phar install --no-interaction --prefer-dist
       displayName: Build Application
 
   - job: UnitTests
