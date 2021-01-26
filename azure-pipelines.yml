@@ -27,6 +27,8 @@ stages:
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
         php -version
         echo "URL: $my_test" 
+        echo "URL: $(my_test)" 
+        $(my_test)
         php -m
         php -i        
       displayName: 'Use PHP version $(phpVersion)1'
