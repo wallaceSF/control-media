@@ -29,22 +29,27 @@ stages:
         echo "URnL: $(my_test)"       
         php -m
         php -i        
-      displayName: 'Use PHP version $(phpVersion)1'  
-- stage: BuildApp5
+      displayName: 'Use PHP version $(phpVersion)1'
+    - script: composer install --no-interaction --prefer-dist
+      displayName: 'composer install'
+
+- stage: BuildApp
   jobs:        
   - job: CheckVersion
     steps: 
-    - task: SonarCloudPrepare@1
-      displayName: Start Sonarqube Analysis
-      inputs:
-        SonarCloud: '$(sonarqube_account)'
-        organization: '$(organization)'
-        scannerMode: 'MSBuild'
-        projectKey: '$(sonarqube_project)'
-        projectName: '$(main_project_name)'
-        extraProperties: |
-          sonar.sourceEncoding=UTF-8
-          sonar.scm.forceReloadAll=true      
+    - script: |
+        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+        php -version      
+        echo "URnL: $(my_test)"       
+        php -m
+        php -i        
+      displayName: 'Use PHP version $(phpVersion)1'
+    - script: composer install --no-interaction --prefer-dist
+      displayName: 'composer install'      
 - stage: BuildApp2
   jobs:        
   - job: CheckVersion2
