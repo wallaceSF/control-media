@@ -47,7 +47,7 @@ stages:
         php -version 
         sudo composer self-update --1       
         composer        
-        cd control-media-backend && ./composer install --no-interaction --prefer-dist
+        cd control-media-backend && composer install --no-interaction --prefer-dist
       displayName: Build Application
 
   - job: UnitTests
