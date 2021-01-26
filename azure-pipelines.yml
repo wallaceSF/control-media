@@ -28,28 +28,19 @@ stages:
         php -version             
       displayName: 'Use PHP version $(phpVersion)'   
     - bash: env
-      displayName: Show environment variables      
+      displayName: Show environment variables     
   - job: Build
-    steps: 
-    - script: composer install --no-interaction --prefer-dist
-      displayName: Build Application      
-- stage: BuildApp2
-  jobs:        
-  - job: CheckVersion2
-    dependsOn: 
-    - CheckVersion
-    condition: succeeded()
-    steps: 
-    - script: |
-        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-        php -version
-        echo "URL: $(my_test)"       
-      displayName: 'Use PHP version $(phpVersion)1'
-    - script: | 
-        pwd && ls -la 
-        cd control-media-backend && composer install --no-interaction --prefer-dist
-      displayName: 'composer install'      
+  dependsOn: 
+  - CheckVersion
+  condition: succeeded()
+  steps: 
+  - script: |
+      sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+      sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+      sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
+      sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
+      sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+      php -version             
+      displayName: 'Use PHP version $(phpVersion)'   
+  - bash: env
+    displayName: Show environment variables            
