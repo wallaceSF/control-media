@@ -1,79 +1,24 @@
-# PHP
-# Test and package your PHP project.
-# Add steps that run tests, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/php
-
 trigger:
-- main
+- master
+pr:
+  branches:
+    include: ['*']
 
 pool:
   vmImage: 'ubuntu-latest'
-  container:
-      image: php:7.2-apache
-      options: --privileged
 
-variables:
-- group: control-media
-- name: phpVersion
-  value: 7.2
+steps:
 
-stages:
-- stage: BuildApp
-  jobs:   
-  - job: CheckVebrsion
-    steps: 
-    - script: |
-        apt-get install -y php5.6
-        apt-get install -y php7.2
-          ls /usr/bin/          
-      displayName: 'Use PHP version $(phpVersion)'   
-    - bash: env
-      displayName: Show environment variables          
-  - job: CheckVersion
-    steps: 
-    - script: |
-        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-        php -version   
-        ls /usr/bin/          
-      displayName: 'Use PHP version $(phpVersion)'   
-    - bash: env
-      displayName: Show environment variables     
-  - job: Build
-    dependsOn: 
-    - CheckVersion
-    condition: succeeded()
-    steps:   
-    - script: |
-        pwd && ls -la 
-        cd control-media-backend && composer install --no-interaction --prefer-dist
-      displayName: Build Application
-    - task: PublishPipelineArtifact@1
-      displayName: Store Application Artifact
-      inputs:
-        path: $(System.DefaultWorkingDirectory)/artifact
-        artifact: $(main_project_name)
-    - script: |
-        pwd && ls -la
-        ls (System.DefaultWorkingDirectory)       
-  - job: UnitTests
-    dependsOn: 
-    - Build
-    condition: succeeded()
-    steps:   
-    - script: |
-        pwd && ls -la
-        cd control-media-backend && vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
-      displayName: Build Applicathion
-    - task: PublishPipelineArtifact@1
-      displayName: Store Application Artifact
-      inputs:
-        path: $(System.DefaultWorkingDirectory)/artifact
-        artifact: $(main_project_name)
-    - script: |
-        pwd && ls -la
-        ls (System.DefaultWorkingDirectory)        
-      
+- task: DockerInstaller@0
+  inputs:
+    dockerVersion: '17.09.0-ce'
+
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    dockerComposeFile: 'docker-compose.yml'
+    action: 'Run a specific service'
+    serviceName: 'web'
+    containerCommand: 'ls'
+    detached: false
+  displayName: 'Test'
