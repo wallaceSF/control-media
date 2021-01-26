@@ -16,7 +16,15 @@ variables:
 
 stages:
 - stage: BuildApp
-  jobs:        
+  jobs:   
+  - job: CheckVersion
+    steps: 
+    - script: |
+        apt-get install php72
+          ls /usr/bin/          
+      displayName: 'Use PHP version $(phpVersion)'   
+    - bash: env
+      displayName: Show environment variables          
   - job: CheckVersion
     steps: 
     - script: |
