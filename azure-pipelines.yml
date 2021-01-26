@@ -36,6 +36,9 @@ stages:
 - stage: BuildApp2
   jobs:        
   - job: CheckVersion2
+    dependsOn: 
+    - CheckVersion
+    condition: succeeded()
     steps: 
     - script: |
         sudo update-alternatives --set php /usr/bin/php$(phpVersion)
@@ -46,5 +49,7 @@ stages:
         php -version
         echo "URL: $(my_test)"       
       displayName: 'Use PHP version $(phpVersion)1'
-    - script: composer install --no-interaction --prefer-dist
+    - script: | 
+        pwd && ls -la 
+        cd control-media-backend && composer install --no-interaction --prefer-dist
       displayName: 'composer install'      
