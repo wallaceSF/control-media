@@ -45,7 +45,7 @@ stages:
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
         php -version 
-        composer self-update --1       
+        sudo composer self-update --1       
         composer        
         cd control-media-backend && ./composer install --no-interaction --prefer-dist
       displayName: Build Application
