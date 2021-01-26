@@ -28,8 +28,7 @@ stages:
         sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-        php -version   
-        ls /usr/bin/          
+        php -version            
       displayName: 'Use PHP version $(phpVersion)'   
     - bash: env
       displayName: Show environment variables
@@ -39,8 +38,9 @@ stages:
     - CheckVersion
     condition: succeeded()
     steps:   
-    - script: |      
-        cd control-media-backend && composer install --no-interaction --prefer-dist
+    - script: |     
+        php -version      
+        cd control-media-backend && php composer install --no-interaction --prefer-dist
       displayName: Build Application
 
   - job: UnitTests
@@ -49,6 +49,7 @@ stages:
     condition: succeeded()
     steps:   
     - script: |
+        php -version            
         pwd && ls -la
         cd control-media-backend && vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
