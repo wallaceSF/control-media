@@ -76,7 +76,9 @@ stages:
     - script: |    
         pwd && ls -la
         ls $(main_project_name)   
+        ls $(Pipeline.Workspace)
         cp -a $(main_project_name)/. control-media-backend/vendor/
+        ls $(main_project_name)   
         ls $(System.DefaultWorkingDirectory) 
         control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
