@@ -21,14 +21,8 @@ stages:
 - stage: BuildApp
   jobs:    
   - job: Build
-    steps:
-    - task: SonarQubePreBuild@1
-      inputs:
-        connectedServiceName: 'https://sonarcloud.io'
-        projectKey: 'wallaceSF_control-media'
-        projectName: 'wallacesf'
-        projectVersion: '1.0'
-          
+    steps:          
+    
     - script: |     
         sudo update-alternatives --set php /usr/bin/php$(phpVersion)
         sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
@@ -36,12 +30,23 @@ stages:
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
         sudo apt-get install php-xdebug
-        php -version
+        php -version        
+      displayName: Build PHP Version $(phpVersion)  
+
+    - script: |     
+        sudo apt-get install php-xdebug
+        php -version             
+      displayName: Install PHP extensions
+    
+    - script: |             
         sudo composer self-update --1
-        composer
-        cd control-media-backend && composer install --no-interaction --prefer-dist
-        ls -la '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'      
-      displayName: Build Application   
+        composer        
+      displayName: Update Composer     
+
+    - script: |             
+        cd control-media-backend && composer install --no-interaction --prefer-dist 
+      displayName: Install dependecy
+
     - script: |                             
         cd control-media-backend
         export XDEBUG_MODE=coverage        
@@ -69,14 +74,4 @@ stages:
         export PATH=$SONAR_SCANNER_HOME/bin:$PATH
         export SONAR_SCANNER_OPTS="-server"
         export SONAR_TOKEN=$(sonarcloud_token)
-        sonar-scanner   -Dsonar.organization=wallacesf   -Dsonar.projectKey=wallaceSF_control-media   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io -Dsonar.php.coverage.reportPaths="$(Pipeline.Workspace)/clover.xml"
-        ls $(Pipeline.Workspace)/clover.xml
-
-    - task: SonarQubePreBuild@1
-      inputs:
-        connectedServiceName: 'https://sonarcloud.io'
-        projectKey: 'wallaceSF_control-media'
-        projectName: 'wallacesf'
-        projectVersion: '1.0'
-        
-      
+        sonar-scanner   -Dsonar.organization=wallacesf   -Dsonar.projectKey=wallaceSF_control-media   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io -Dsonar.php.coverage.reportPaths="$(Pipeline.Workspace)/clover.xml"      
