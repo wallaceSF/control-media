@@ -35,11 +35,12 @@ stages:
         cd control-media-backend && composer install --no-interaction --prefer-dist
         ls -la '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'      
       displayName: Build Application   
-    - script: |     
-        export XDEBUG_MODE=coverage
+    - script: |             
         ls -la
         ls control-media-backend/vendor
-        cd control-media-backend/vendor/bin && phpunit --coverage-clover '$(System.DefaultWorkingDirectory)/artifact/clover.xml'
+        cd control-media-backend
+        export XDEBUG_MODE=coverage
+        vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: UnitTests             
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact0
