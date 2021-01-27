@@ -55,7 +55,7 @@ stages:
       displayName: Store Application Artifact0
       inputs:
         path: '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'
-        artifact: $(main_project_name)
+        artifact: $(main_project_name)/vendor
 
   - job: UnitTests
     dependsOn: 
