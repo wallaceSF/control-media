@@ -77,8 +77,10 @@ stages:
         cp -a $(Pipeline.Workspace) /tmp/vendor        
         cp -a /tmp/vendor control-media-backend/vendor/                  
         ls -la control-media-backend        
-        sudo chown -R www-data:www-data control-media-backend/vendor        
+        sudo chown -R www-data:www-data control-media-backend/vendor    
+        sudo chmod 777 control-media-backend/vendor  -R            
         control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+        php control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact
