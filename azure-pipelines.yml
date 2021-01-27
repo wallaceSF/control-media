@@ -51,7 +51,9 @@ stages:
         cd control-media-backend && composer install --no-interaction --prefer-dist
         ls -la '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'
         $(System.DefaultWorkingDirectory)/control-media-backend/vendor/bin/phpunit
+        sudo $(System.DefaultWorkingDirectory)/control-media-backend/vendor/bin/phpunit
         vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+        sudo vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Application
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact0
