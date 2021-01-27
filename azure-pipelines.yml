@@ -81,6 +81,8 @@ stages:
         sudo chmod 777 control-media-backend/vendor  -R            
         control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
         php control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+        sudo control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+        sudo php control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact
