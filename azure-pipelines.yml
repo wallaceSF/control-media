@@ -28,7 +28,8 @@ stages:
         sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-        php -version            
+        php -version
+         ls -la '$(System.DefaultWorkingDirectory)/control-media-backend'            
       displayName: 'Use PHP version $(phpVersion)'   
     - bash: env
       displayName: Show environment variables
@@ -48,7 +49,6 @@ stages:
         sudo composer self-update --1       
         composer        
         cd control-media-backend && composer install --no-interaction --prefer-dist
-        ls -la
         ls -la '$(System.DefaultWorkingDirectory)/control-media-backend'
       displayName: Build Application
     - task: PublishPipelineArtifact@1
