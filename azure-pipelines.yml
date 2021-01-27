@@ -75,7 +75,9 @@ stages:
         php -version          
     - script: |   
         ls $(Pipeline.Workspace) 
-        cp -a $(Pipeline.Workspace) control-media-backend/vendor/       
+        cp -a $(Pipeline.Workspace) /tmp/vendor 
+        ls  /tmp/vendor 
+        cp -a /tmp/vendor control-media-backend/vendor/             
         mv $(Pipeline.Workspace) control-media-backend/vendor/         
         ls -la
         control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
