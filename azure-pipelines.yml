@@ -40,6 +40,7 @@ stages:
         ls control-media-backend/vendor
         cd control-media-backend
         export XDEBUG_MODE=coverage
+        echo  $(System.DefaultWorkingDirectory)
         vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: UnitTests             
     - task: PublishPipelineArtifact@1
