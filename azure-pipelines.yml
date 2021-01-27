@@ -73,14 +73,11 @@ stages:
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
         php -version          
-    - script: |   
-        ls $(Pipeline.Workspace) 
-        cp -a $(Pipeline.Workspace) /tmp/vendor 
-        ls  /tmp/vendor 
-        cp -a /tmp/vendor control-media-backend/vendor/             
-        mv $(Pipeline.Workspace) control-media-backend/vendor/         
-        ls -la
-        control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+    - script: |        
+        cp -a $(Pipeline.Workspace) /tmp/vendor        
+        cp -a /tmp/vendor control-media-backend/vendor/                  
+        ls -la control-media-backend
+        sudo control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact
