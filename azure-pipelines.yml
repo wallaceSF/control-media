@@ -19,26 +19,8 @@ variables:
 
 stages:
 - stage: BuildApp
-  jobs:   
-  - job: CheckVersion
-    steps: 
-    - script: |
-        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-        sudo apt-get install php-xdebug
-        php -version
-         ls -la '$(System.DefaultWorkingDirectory)/control-media-backend'            
-      displayName: 'Use PHP version $(phpVersion)'   
-    - bash: env
-      displayName: Show environment variables
-
+  jobs:    
   - job: Build
-    dependsOn: 
-    - CheckVersion
-    condition: succeeded()
     steps:   
     - script: |     
         sudo update-alternatives --set php /usr/bin/php$(phpVersion)
@@ -47,52 +29,28 @@ stages:
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
         sudo apt-get install php-xdebug
-        php -version 
-        sudo composer self-update --1       
-        composer        
+        php -version
+        sudo composer self-update --1
+        composer
         cd control-media-backend && composer install --no-interaction --prefer-dist
         ls -la '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'
         export XDEBUG_MODE=coverage
-        vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml        
-      displayName: Build Application
+        vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
+      displayName: Build Application and run Unit Tests
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact0
       inputs:
-        path: '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'
-        artifact: vendor
+        path: '$(System.DefaultWorkingDirectory)/artifact'
+        artifact: artifact
 
-  - job: UnitTests
+  - job: SonarCloud
     dependsOn: 
     - Build
     condition: succeeded()
     steps: 
     - task: DownloadPipelineArtifact@2
       inputs:
-        artifact: vendor
+        artifact: artifact
     - script: |
-        ls $(Pipeline.Workspace)
-        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
-        php -version          
-    - script: |        
-        cp -a $(Pipeline.Workspace) /tmp/vendor        
-        cp -a /tmp/vendor control-media-backend/vendor/                  
-        ls -la control-media-backend        
-        sudo chown -R www-data:www-data control-media-backend/vendor    
-        sudo chmod 777 control-media-backend/vendor  -R            
-        control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml      
-        sudo control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml        
-      displayName: Build Applicathion
-    - task: PublishPipelineArtifact@1
-      displayName: Store Application Artifact
-      inputs:
-        path: $(System.DefaultWorkingDirectory)/artifact
-        artifact: $(main_project_name)
-    - script: |
-        pwd && ls -la
-        ls $(main_project_name)
-        ls (System.DefaultWorkingDirectory)        
+        ls $(Pipeline.Workspace)           
       
