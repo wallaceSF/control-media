@@ -17,7 +17,7 @@ variables:
   value: 5.6
 
 stages:
-- stage: Build PHP7.*
+- stage: Build PHP7
   jobs:    
   - job: Build
     steps:          
