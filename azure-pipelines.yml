@@ -33,10 +33,12 @@ stages:
         sudo composer self-update --1
         composer
         cd control-media-backend && composer install --no-interaction --prefer-dist
-        ls -la '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'
+        ls -la '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'      
+      displayName: Build Application   
+    - script: |     
         export XDEBUG_MODE=coverage
         vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
-      displayName: Build Application and run Unit Tests
+      displayName: UnitTests             
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact0
       inputs:
