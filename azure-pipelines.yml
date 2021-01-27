@@ -61,6 +61,9 @@ stages:
     - Build
     condition: succeeded()
     steps: 
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: $(main_project_name)
     - script: |
         sudo update-alternatives --set php /usr/bin/php$(phpVersion)
         sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
