@@ -73,7 +73,8 @@ stages:
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
         sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
         php -version          
-    - script: |    
+    - script: |   
+        ls $(Pipeline.Workspace) 
         ls $(main_project_name)   
         ls -la
         control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
