@@ -53,7 +53,7 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact0
       inputs:
-        path: $(System.DefaultWorkingDirectory)/control-media/vendor
+        path: $(System.DefaultWorkingDirectory)/control-media/control-media-backend/vendor
         artifact: $(main_project_name)/vendor  
 
   - job: UnitTests
