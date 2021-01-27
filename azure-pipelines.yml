@@ -8,30 +8,29 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-16.04'
-  container:
-      image: php:7.2-apache
-      options: --privileged
 
 variables:
 - group: control-media
-- name: phpVersion
+- name: phpVersion7
   value: 7.2
+- name: phpVersion5
+  value: 5.6
 
 stages:
-- stage: BuildApp
+- stage: Build PHP$(phpVersion7)
   jobs:    
   - job: Build
     steps:          
     
     - script: |     
-        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
-        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+        sudo update-alternatives --set php /usr/bin/php$(phpVersion7)
+        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion7)
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion7)
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion7)
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion7)
         sudo apt-get install php-xdebug
         php -version        
-      displayName: Build PHP Version $(phpVersion)  
+      displayName: Build PHP Version $(phpVersion7)  
 
     - script: |     
         sudo apt-get install php-xdebug
