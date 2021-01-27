@@ -17,7 +17,7 @@ variables:
   value: 5.6
 
 stages:
-- stage: Build PHP$(phpCurrentVersion)
+- stage: Build PHP $(phpCurrentVersion)
   jobs:    
   - job: Build
     steps:          
