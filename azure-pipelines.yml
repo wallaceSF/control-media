@@ -74,3 +74,33 @@ stages:
         export SONAR_SCANNER_OPTS="-server"
         export SONAR_TOKEN=$(sonarcloud_token)
         sonar-scanner   -Dsonar.organization=wallacesf   -Dsonar.projectKey=wallaceSF_control-media   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io -Dsonar.php.coverage.reportPaths="$(Pipeline.Workspace)/clover.xml"      
+
+
+- stage: Build_PHP_Five
+  jobs:    
+  - job: Build
+    steps:          
+    
+    - script: |     
+        sudo update-alternatives --set php /usr/bin/php$(phpOldVersion)
+        sudo update-alternatives --set phar /usr/bin/phar$(phpOldVersion)
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpOldVersion)
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpOldVersion)
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpOldVersion)
+        sudo apt-get install php-xdebug
+        php -version        
+      displayName: Build PHP Version $(phpOldVersion)  
+
+    - script: |             
+        sudo composer self-update --1
+        composer        
+      displayName: Update Composer     
+
+    - script: |             
+        cd control-media-backend && composer install --no-interaction --prefer-dist 
+      displayName: Install dependecy
+
+    - script: |                             
+        cd control-media-backend             
+        vendor/bin/phpunit
+      displayName: UnitTests
