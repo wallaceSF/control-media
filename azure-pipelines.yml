@@ -86,8 +86,7 @@ stages:
         sudo update-alternatives --set phar /usr/bin/phar$(phpOldVersion)
         sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpOldVersion)
         sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpOldVersion)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpOldVersion)
-        sudo apt-get install php-xdebug
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpOldVersion)      
         php -version        
       displayName: Build PHP Version $(phpOldVersion)  
 
