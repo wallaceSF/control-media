@@ -60,6 +60,6 @@ stages:
         export SONAR_SCANNER_OPTS="-server"
         export SONAR_TOKEN=$(sonarcloud_token)
 
-        sonar-scanner   -Dsonar.organization=wallacesf   -Dsonar.projectKey=wallaceSF_control-media   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io -Dsonar.php.coverage.reportPaths= $(Pipeline.Workspace)/clover.xml
+        sonar-scanner   -Dsonar.organization=wallacesf   -Dsonar.projectKey=wallaceSF_control-media   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io -Dsonar.php.coverage.reportPaths="$(Pipeline.Workspace)/clover.xml"
         ls $(Pipeline.Workspace)/clover.xml
       
