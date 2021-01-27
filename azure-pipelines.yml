@@ -55,7 +55,7 @@ stages:
       displayName: Store Application Artifact0
       inputs:
         path: '$(System.DefaultWorkingDirectory)/control-media-backend/vendor'
-        artifact: $(main_project_name)/vendor
+        artifact: vendor
 
   - job: UnitTests
     dependsOn: 
@@ -64,7 +64,7 @@ stages:
     steps: 
     - task: DownloadPipelineArtifact@2
       inputs:
-        artifact: $(main_project_name)
+        artifact: vendor
     - script: |
         ls $(Pipeline.Workspace)
         sudo update-alternatives --set php /usr/bin/php$(phpVersion)
@@ -75,7 +75,8 @@ stages:
         php -version          
     - script: |   
         ls $(Pipeline.Workspace) 
-        cp -a $(Pipeline.Workspace) control-media-backend/vendor/        
+        cp -a $(Pipeline.Workspace) control-media-backend/vendor/       
+        mv $(Pipeline.Workspace)/vendor control-media-backend/vendor/         
         ls -la
         control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
