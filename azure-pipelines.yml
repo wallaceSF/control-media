@@ -11,26 +11,26 @@ pool:
 
 variables:
 - group: control-media
-- name: phpVersion7
+- name: phpCurrentVersion
   value: 7.2
-- name: phpVersion5
+- name: phpOldVersion
   value: 5.6
 
 stages:
-- stage: Build PHP$(phpVersion7)
+- stage: Build PHP$(phpCurrentVersion)
   jobs:    
   - job: Build
     steps:          
     
     - script: |     
-        sudo update-alternatives --set php /usr/bin/php$(phpVersion7)
-        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion7)
-        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion7)
-        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion7)
-        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion7)
+        sudo update-alternatives --set php /usr/bin/php$(phpCurrentVersion)
+        sudo update-alternatives --set phar /usr/bin/phar$(phpCurrentVersion)
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpCurrentVersion)
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpCurrentVersion)
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpCurrentVersion)
         sudo apt-get install php-xdebug
         php -version        
-      displayName: Build PHP Version $(phpVersion7)  
+      displayName: Build PHP Version $(phpCurrentVersion)  
 
     - script: |     
         sudo apt-get install php-xdebug
