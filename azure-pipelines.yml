@@ -53,8 +53,8 @@ stages:
     - task: PublishPipelineArtifact@1
       displayName: Store Application Artifact0
       inputs:
-        path: $(System.DefaultWorkingDirectory)
-        artifact: $(main_project_name)  
+        path: $(System.DefaultWorkingDirectory)/control-media/vendor
+        artifact: $(main_project_name)/vendor  
 
   - job: UnitTests
     dependsOn: 
@@ -70,9 +70,8 @@ stages:
         php -version          
     - script: |    
         pwd && ls -la
-        echo $(System.DefaultWorkingDirectory)
-        ls $(System.DefaultWorkingDirectory)
-        ls $(System.DefaultWorkingDirectory)/control-media-backend
+        ls $(main_project_name)   
+        ls $(System.DefaultWorkingDirectory) 
         control-media-backend/vendor/bin/phpunit --coverage-clover $(System.DefaultWorkingDirectory)/artifact/clover.xml
       displayName: Build Applicathion
     - task: PublishPipelineArtifact@1
