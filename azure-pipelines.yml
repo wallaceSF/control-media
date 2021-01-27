@@ -14,7 +14,7 @@ variables:
 - name: phpCurrentVersion
   value: 7.2
 - name: phpOldVersion
-  value: 5.6
+  value: 7.1
 
 stages:
 - stage: Build_PHP_Seven
@@ -74,6 +74,7 @@ stages:
         export SONAR_SCANNER_OPTS="-server"
         export SONAR_TOKEN=$(sonarcloud_token)
         sonar-scanner   -Dsonar.organization=wallacesf   -Dsonar.projectKey=wallaceSF_control-media   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io -Dsonar.php.coverage.reportPaths="$(Pipeline.Workspace)/clover.xml"      
+      displayName: Send to SonarCloud    
 
 
 - stage: Build_PHP_Five
