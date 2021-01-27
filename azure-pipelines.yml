@@ -21,7 +21,14 @@ stages:
 - stage: BuildApp
   jobs:    
   - job: Build
-    steps:   
+    steps:
+    - task: SonarQubePreBuild@1
+      inputs:
+        connectedServiceName: 'https://sonarcloud.io'
+        projectKey: 'wallaceSF_control-media'
+        projectName: 'wallacesf'
+        projectVersion: '1.0'
+          
     - script: |     
         sudo update-alternatives --set php /usr/bin/php$(phpVersion)
         sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
@@ -62,7 +69,14 @@ stages:
         export PATH=$SONAR_SCANNER_HOME/bin:$PATH
         export SONAR_SCANNER_OPTS="-server"
         export SONAR_TOKEN=$(sonarcloud_token)
-
         sonar-scanner   -Dsonar.organization=wallacesf   -Dsonar.projectKey=wallaceSF_control-media   -Dsonar.sources=.   -Dsonar.host.url=https://sonarcloud.io -Dsonar.php.coverage.reportPaths="$(Pipeline.Workspace)/clover.xml"
         ls $(Pipeline.Workspace)/clover.xml
+
+    - task: SonarQubePreBuild@1
+      inputs:
+        connectedServiceName: 'https://sonarcloud.io'
+        projectKey: 'wallaceSF_control-media'
+        projectName: 'wallacesf'
+        projectVersion: '1.0'
+        
       
