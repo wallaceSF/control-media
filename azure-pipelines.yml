@@ -19,3 +19,6 @@ steps:
       docker exec -i newimage sh -c "while ! /etc/init.d/mysql status | grep -m1 'is running'; do sleep 1; echo 'Waiting for mysql service...';  done; "
       docker exec -i newimage mysql magento2 -e \
             "INSERT INTO magento2.core_config_data VALUES (null, 'default', 0, 'customer/create_account/vat_frontend_visibility', 1);"
+
+      docker exec -i magento2dev mysql magento2 -e \ "select * from magento2.core_config_data;"
+      
