@@ -1,3 +1,5 @@
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=wallaceSF_scratchpay-challenge)
+
 # Control Media
 Projeto com o objetivo de controle de mídia
 
